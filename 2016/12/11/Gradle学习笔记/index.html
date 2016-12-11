@@ -6,18 +6,27 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Android的Theme结构 | 苟利国家生死已 岂因祸福避趋之</title>
+  <title>Gradle学习笔记 | 苟利国家生死已 岂因祸福避趋之</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前段时间的开发过程中涉及到了应用Theme的修改，改了以后发现很多问题，Theme复杂的结构和层级，也令人困惑。今天对这部分知识做一个小整理。当使用安卓主题和支持库时，你可能会遇见过这些名字：Theme.AppCompat, Theme.Base.AppCompat, Base.V7.Theme.AppCompat, Base.v11.Theme.AppCompat, Base.v21.Theme">
+  <meta name="description" content="#Gradle学习笔记（一）
+Gradle是android开发中引入的全新的构建系统。    它使用领域驱动语言（DSL）来描述构建逻辑，使用groovy来编写构建脚本，可以方便的定制构建逻辑，具有非常良好的扩展性，并且我们可以非常容易的使用一些可重用的组件来组成构建。你可以随心所欲的来控制、扩展你的构建过程。    Gradle里有两个最基本的概念，任何东西都是基于这两个基础概念：
+
+Proje">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android的Theme结构">
-<meta property="og:url" content="http://yoursite.com/2016/11/27/Android的Theme结构/index.html">
+<meta property="og:title" content="Gradle学习笔记">
+<meta property="og:url" content="http://yoursite.com/2016/12/11/Gradle学习笔记/index.html">
 <meta property="og:site_name" content="苟利国家生死已 岂因祸福避趋之">
-<meta property="og:description" content="前段时间的开发过程中涉及到了应用Theme的修改，改了以后发现很多问题，Theme复杂的结构和层级，也令人困惑。今天对这部分知识做一个小整理。当使用安卓主题和支持库时，你可能会遇见过这些名字：Theme.AppCompat, Theme.Base.AppCompat, Base.V7.Theme.AppCompat, Base.v11.Theme.AppCompat, Base.v21.Theme">
-<meta property="og:updated_time" content="2016-11-27T14:29:46.000Z">
+<meta property="og:description" content="#Gradle学习笔记（一）
+Gradle是android开发中引入的全新的构建系统。    它使用领域驱动语言（DSL）来描述构建逻辑，使用groovy来编写构建脚本，可以方便的定制构建逻辑，具有非常良好的扩展性，并且我们可以非常容易的使用一些可重用的组件来组成构建。你可以随心所欲的来控制、扩展你的构建过程。    Gradle里有两个最基本的概念，任何东西都是基于这两个基础概念：
+
+Proje">
+<meta property="og:updated_time" content="2016-12-11T09:49:33.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android的Theme结构">
-<meta name="twitter:description" content="前段时间的开发过程中涉及到了应用Theme的修改，改了以后发现很多问题，Theme复杂的结构和层级，也令人困惑。今天对这部分知识做一个小整理。当使用安卓主题和支持库时，你可能会遇见过这些名字：Theme.AppCompat, Theme.Base.AppCompat, Base.V7.Theme.AppCompat, Base.v11.Theme.AppCompat, Base.v21.Theme">
+<meta name="twitter:title" content="Gradle学习笔记">
+<meta name="twitter:description" content="#Gradle学习笔记（一）
+Gradle是android开发中引入的全新的构建系统。    它使用领域驱动语言（DSL）来描述构建逻辑，使用groovy来编写构建脚本，可以方便的定制构建逻辑，具有非常良好的扩展性，并且我们可以非常容易的使用一些可重用的组件来组成构建。你可以随心所欲的来控制、扩展你的构建过程。    Gradle里有两个最基本的概念，任何东西都是基于这两个基础概念：
+
+Proje">
   
     <link rel="alternative" href="/atom.xml" title="苟利国家生死已 岂因祸福避趋之" type="application/atom+xml">
   
@@ -120,7 +129,7 @@
 </nav>
 
       <div class="body-wrap">
-        <article id="post-Android的Theme结构" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-Gradle学习笔记" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <input type="hidden" class="isFancy" />
@@ -130,7 +139,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Android的Theme结构
+      Gradle学习笔记
     </h1>
   
 
@@ -138,51 +147,46 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>前段时间的开发过程中涉及到了应用Theme的修改，改了以后发现很多问题，Theme复杂的结构和层级，也令人困惑。今天对这部分知识做一个小整理。<br>当使用安卓主题和支持库时，你可能会遇见过这些名字：<br>Theme.AppCompat, Theme.Base.AppCompat, Base.V7.Theme.AppCompat, Base.v11.Theme.AppCompat, Base.v21.Theme.AppCompat, ThemeOverlay, Platform.AppCompat, DeviceDefault, Material, Holo, Classic 等等……<br>这些主题是怎么组织起来的？我们应该怎么选择呢？</p>
-<h2 id="AppCompat-v7"><a href="#AppCompat-v7" class="headerlink" title="AppCompat v7"></a>AppCompat v7</h2><p>不同的安卓平台定义了不同的主题、样式和属性，最初安卓主题的层级非常繁杂，而且很不直观。知道v7包的到来，它带来了全新的主题架构，使得所有安卓平台自API v7 以后能够获得一致的材料外观（Material apperance）。Base.V…和Platform.Appcompat正式在这个时候被加入进来的。</p>
-<p>在Appcompat中，主题被划分成四个层级，每个层级继承自更低一层：</p>
-<p><strong>Level1-&gt;Level2-&gt;Level3-&gt;Level 4</strong></p>
-<p>除此之外，每个版本的安卓API都有一个对应的 values-v{api} 文件夹存放各自需要自定义或覆写的样式和属性：</p>
-<p><strong>values, values-v11, values-v14, values-v21, values-v22, values-v23</strong></p>
-<h4 id="Level4"><a href="#Level4" class="headerlink" title="Level4"></a>Level4</h4><p>该层包含了Paltform.AppCompat 主题。该主题总是继承自当前版本的默认主题，例如：</p>
-<p><strong>values</strong></p>
-<p>Platform.AppCompat -&gt; android:Theme</p>
-<p><strong>values-v11</strong></p>
-<p>Platform.AppCompat -&gt; android:Theme.Holo</p>
-<p><strong>values-v21</strong></p>
-<p>Platform.AppCompat -&gt; android:Theme.Material</p>
-<h4 id="Level-3"><a href="#Level-3" class="headerlink" title="Level 3"></a>Level 3</h4><p>大部分工作在这一层被完成，Base.V7.Theme.AppCompat, Base.V11.Theme.AppCompat, Base.V21.Theme.AppCompat等也是在这一层被定义。这些主题都继承自 Platform.AppCompat。</p>
-<p><strong>values</strong></p>
-<p>Base.V7.Theme.AppCompat* → Platform.AppCompat → android:Theme</p>
-<p><strong>values-v11</strong></p>
-<p>Base.V11.Theme.AppCompat → Platform.AppCompat → android:Theme.Holo</p>
-<p><strong>values-v21</strong></p>
-<p>Base.V21.ThemeAppCompat → Base.V7.ThemeAppCompat → Platform.AppCompat → android:Theme.Material，还包括Base.V7.Theme.AppCompat.Light,Base.V7.Theme.Appcompat.Diaglog等。</p>
-<p>绝大多数属性和几乎所有工作在 Base.V{api}.Theme.AppCompat 中被定义和完成。ActionBar, DropwDown, ActionMode, Panel, List, Spinner, Toolbar 等控件中的所有属性都在这里被定义。</p>
-<h4 id="Level-2"><a href="#Level-2" class="headerlink" title="Level 2"></a>Level 2</h4><p>根据安卓的官方解释，我们在这一层拿到的主题只是第三层主题的别名：</p>
-<p>There are the themes which are pointers to the correct third level theme.They can also be used to set attributes for that specific platform (and platforms up until the next declaration).</p>
-<p><strong>values</strong></p>
-<p>Base.Theme.AppCompat* → Base.V7.Theme.AppCompat</p>
-<p><strong>values-v21</strong></p>
-<p>Base.Theme.AppCompat → Base.V21.Theme.AppCompat</p>
-<h4 id="Level-1"><a href="#Level-1" class="headerlink" title="Level 1"></a>Level 1</h4><p>Theme.AppCompat, Theme.AppCompat.Light, Theme.AppCompat.NoActionBar等主题在这里被定义。<strong>开发者应该使用这些主题，而非那些更底层的。</strong></p>
-<p><strong>values</strong></p>
-<p>Theme.AppCompat → Base.Theme.AppCompat</p>
-<h3 id="ThemeOverlays"><a href="#ThemeOverlays" class="headerlink" title="ThemeOverlays"></a>ThemeOverlays</h3><p>在所有可用的主题中，我们可以发现一个名字带有 ThemeOverlay 的系列：</p>
+        <p>#Gradle学习笔记（一）</p>
+<p>Gradle是android开发中引入的全新的构建系统。<br>    它使用领域驱动语言（DSL）来描述构建逻辑，使用groovy来编写构建脚本，可以方便的定制构建逻辑，具有非常良好的扩展性，并且我们可以非常容易的使用一些可重用的组件来组成构建。你可以随心所欲的来控制、扩展你的构建过程。<br>    Gradle里有两个最基本的概念，任何东西都是基于这两个基础概念：</p>
 <ul>
-<li>ThemeOverlay</li>
-<li>ThemeOverlay.Light</li>
-<li>ThemeOverlay.ActionBar.Light</li>
-<li>ThemeOverlay.ActionBar.Dark</li>
+<li>Project</li>
+<li><p>Task<br>每一个构建都由一个或多个Project构成，Project理解的不是很清楚，官方文档的解释是：“ 一个 project 到底代表什么依赖于你想用 Gradle 做什么. 举个例子, 一个 project 可以代表一个 JAR 或者一个网页应用. 它也可能代表一个发布的 ZIP 压缩包, 这个 ZIP 可能是由许多其他项目的 JARs 构成的. 但是一个 project 不一定非要代表被构建的某个东西. 它可以代表一件要做的事, 比如部署你的应用.”我理解在android开发中，一个Project就代表我们要构建的一个应用。<br>每一个Project由一个或多个Task构成，Task是一些更加细化的构建步骤，例如复制文件，签名安装包等。Project为Task提供了上下文环境。<br>gradle运行时会在当前目录中查找一个名叫build.gradle的文件，称之为构建脚本，脚本里定义了Projects和他的Tasks。<em>运行构建时，分为两步：配置阶段和执行阶段。</em><br><strong>创建Task:</strong><br>1.</p>
+<pre><code>task helloWorld &amp;lt;&amp;lt; {
+   println &quot;Hello World!&quot;
+}
+</code></pre><p>2.</p>
+<pre><code>task helloWorld {
+   doLast {
+      println &quot;Hello World&quot;}
+}
+</code></pre><p>3.</p>
+<pre><code>task helloWorld {
+   println &quot;Hello World!&quot;
+}
+</code></pre><p>4.</p>
+<pre><code>task hello(dependsOn:HelloWorld) &amp;lt;&amp;lt; {
+    println &apos;hello&apos;
+}
+</code></pre><p>5.</p>
+<pre><code>task copy(type: Copy) {
+   from &apos;resources&apos;
+   into &apos;target&apos;
+}
+</code></pre><p>通过调用Project的Task()方法来创建任务，以上1和2是等价的，doLast表示在该Task的最后加入执行代码，&lt;&lt;是doLast的快捷写法。3是直接创建了一个任务，那1、2和3有什么区别呢？就是他们执行的阶段不同，3是直接在配置区域声明的任务，因此它在配置阶段就被执行，而1和2是在配置完成后才打印“Hello World”，因此只有我们主动的调用才会执行。任务4给hello任务增加了一个依赖，表示在执行4时，要先执行其依赖的HelloWorld任务，也可以在Task定义之后再声明依赖：<code>hello.dependsOn HelloWorld</code>。对于任务5，Copy是一个内置的默认Task，它有多种重载形式，如果想直接用这个功能，我们可以配置一个Task，就像任务5做的那样，它表示本身是一个Copy任务，而且传入了两个参数，调用copy时实际上是调用了Copy任务，而且copy任务内部的代码是在配置阶段执行的，在执行阶段才会真正调用Copy。<br><strong>闭包</strong><br>闭包（Closure）是一段单独的代码块，它可以接受参数，返回值，或者赋值给一个变量，最关键的是他可以作为参数传递给其他方法，这样做有一个很大的好处就是可以解耦一些执行逻辑。闭包会在被调用的时候执行，而不是创建时。</p>
+</li>
 </ul>
-<p>这些主题又是做什么的呢？答案是 <strong>仅用于为特定的用途定义必要的属性。</strong> 例如 ThemeOverlay 主题只定义了 textColor，textAppearance，窗口的颜色属性和一些类似 <em>colorControlButton</em> 的属性；通常用作于 Toolbar 主题的 ThemeOverlay.ActionBar.Light，仅将 <em>colorControlButton</em> 的值定义为 <em>?attr:textColorSecondary</em>。</p>
+<pre><code>def hello = { println &apos;Hello world!&apos; }
+//执行闭包
+hello()
+</code></pre><p>以上代码创建了一个闭包，紧接着又调用了他，这时会打印出“Hello World!”。<br>把闭包hello当做一个参数传递：<code>method(hello)</code>，<br>如果闭包是方法最后一个参数，可以省略掉括号：<code>method hello</code>，<br>或者使用内联的闭包：<code>method({println &#39;Hello world!&#39;})</code>，<br>接受多个参数：<code>method(arg1, { println ‘Hello World’ })</code>，<br>如果闭包是最后一个参数，可以把他从括号中提出来：<code>method(arg1) { println ‘Hello World’ }</code>，<br>最后一个看上去好熟悉的样子。。。<br>闭包还可以直接使用当前上下文的变量：<br>    def word = ‘Hello World!’<br>    def closure = {println word}<br>    closure()<br>执行后将打印出“Hello World!”。<br>闭包还有一个重要的功能是就是delegate机制。简单说就是我们可以让闭包中执行代码的作用对象设置成任意其他对象：<br>    def closure = {println name}<br>    Person person = new Person()<br>    closure.setDelegate(person)<br>    class Person {<br>        def name = “hello”；<br>    }<br>上面的代码执行后打印出”hello“。定义closure时，name变量是不存在的，但是当设置了delegete是person对象时，闭包的作用对象就成了person，而person是存在name变量的，因此打印出了person的name。    </p>
 
       
     </div>
     <div class="article-info article-info-index">
       
-      <a href="/2016/11/27/Android的Theme结构/" class="archive-article-date">
-  	<time datetime="2016-11-27T13:17:39.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-11-27</time>
+      <a href="/2016/12/11/Gradle学习笔记/" class="archive-article-date">
+  	<time datetime="2016-12-11T09:47:08.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-12-11</time>
 </a>
       
       
@@ -195,18 +199,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2016/12/11/React-Native之Navigator/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2016/12/11/Dagger2之基本概念/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          React Native之Navigator
+          Dagger2 基本概念
         
       </div>
     </a>
   
   
-    <a href="/2016/11/25/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Hello World</div>
+    <a href="/2016/12/11/React-Native之Navigator/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">React Native之Navigator</div>
       <i class="icon-circle-right"></i>
     </a>
   

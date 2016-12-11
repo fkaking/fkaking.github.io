@@ -6,18 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Android的Theme结构 | 苟利国家生死已 岂因祸福避趋之</title>
+  <title>Dagger2 基本概念 | 苟利国家生死已 岂因祸福避趋之</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前段时间的开发过程中涉及到了应用Theme的修改，改了以后发现很多问题，Theme复杂的结构和层级，也令人困惑。今天对这部分知识做一个小整理。当使用安卓主题和支持库时，你可能会遇见过这些名字：Theme.AppCompat, Theme.Base.AppCompat, Base.V7.Theme.AppCompat, Base.v11.Theme.AppCompat, Base.v21.Theme">
+  <meta name="description" content="Dagger2学习之基本概念Dagger2是一个依赖注入（Dependency Injection简称DI）框架。它是Square公司的Dagger项目下的一个分支，由Google维护。依赖注入的概念，相信接触过spring开发的都比较熟悉，简单来说就是一个类A的生成如果需要另一个类B的实例，就说A依赖于B。
+123456class A&amp;#123;	B b；	A()&amp;#123;		b = new">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android的Theme结构">
-<meta property="og:url" content="http://yoursite.com/2016/11/27/Android的Theme结构/index.html">
+<meta property="og:title" content="Dagger2 基本概念">
+<meta property="og:url" content="http://yoursite.com/2016/12/11/Dagger2之基本概念/index.html">
 <meta property="og:site_name" content="苟利国家生死已 岂因祸福避趋之">
-<meta property="og:description" content="前段时间的开发过程中涉及到了应用Theme的修改，改了以后发现很多问题，Theme复杂的结构和层级，也令人困惑。今天对这部分知识做一个小整理。当使用安卓主题和支持库时，你可能会遇见过这些名字：Theme.AppCompat, Theme.Base.AppCompat, Base.V7.Theme.AppCompat, Base.v11.Theme.AppCompat, Base.v21.Theme">
-<meta property="og:updated_time" content="2016-11-27T14:29:46.000Z">
+<meta property="og:description" content="Dagger2学习之基本概念Dagger2是一个依赖注入（Dependency Injection简称DI）框架。它是Square公司的Dagger项目下的一个分支，由Google维护。依赖注入的概念，相信接触过spring开发的都比较熟悉，简单来说就是一个类A的生成如果需要另一个类B的实例，就说A依赖于B。
+123456class A&amp;#123;	B b；	A()&amp;#123;		b = new">
+<meta property="og:updated_time" content="2016-12-11T10:00:03.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android的Theme结构">
-<meta name="twitter:description" content="前段时间的开发过程中涉及到了应用Theme的修改，改了以后发现很多问题，Theme复杂的结构和层级，也令人困惑。今天对这部分知识做一个小整理。当使用安卓主题和支持库时，你可能会遇见过这些名字：Theme.AppCompat, Theme.Base.AppCompat, Base.V7.Theme.AppCompat, Base.v11.Theme.AppCompat, Base.v21.Theme">
+<meta name="twitter:title" content="Dagger2 基本概念">
+<meta name="twitter:description" content="Dagger2学习之基本概念Dagger2是一个依赖注入（Dependency Injection简称DI）框架。它是Square公司的Dagger项目下的一个分支，由Google维护。依赖注入的概念，相信接触过spring开发的都比较熟悉，简单来说就是一个类A的生成如果需要另一个类B的实例，就说A依赖于B。
+123456class A&amp;#123;	B b；	A()&amp;#123;		b = new">
   
     <link rel="alternative" href="/atom.xml" title="苟利国家生死已 岂因祸福避趋之" type="application/atom+xml">
   
@@ -120,7 +123,7 @@
 </nav>
 
       <div class="body-wrap">
-        <article id="post-Android的Theme结构" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-Dagger2之基本概念" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <input type="hidden" class="isFancy" />
@@ -130,7 +133,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Android的Theme结构
+      Dagger2 基本概念
     </h1>
   
 
@@ -138,51 +141,29 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>前段时间的开发过程中涉及到了应用Theme的修改，改了以后发现很多问题，Theme复杂的结构和层级，也令人困惑。今天对这部分知识做一个小整理。<br>当使用安卓主题和支持库时，你可能会遇见过这些名字：<br>Theme.AppCompat, Theme.Base.AppCompat, Base.V7.Theme.AppCompat, Base.v11.Theme.AppCompat, Base.v21.Theme.AppCompat, ThemeOverlay, Platform.AppCompat, DeviceDefault, Material, Holo, Classic 等等……<br>这些主题是怎么组织起来的？我们应该怎么选择呢？</p>
-<h2 id="AppCompat-v7"><a href="#AppCompat-v7" class="headerlink" title="AppCompat v7"></a>AppCompat v7</h2><p>不同的安卓平台定义了不同的主题、样式和属性，最初安卓主题的层级非常繁杂，而且很不直观。知道v7包的到来，它带来了全新的主题架构，使得所有安卓平台自API v7 以后能够获得一致的材料外观（Material apperance）。Base.V…和Platform.Appcompat正式在这个时候被加入进来的。</p>
-<p>在Appcompat中，主题被划分成四个层级，每个层级继承自更低一层：</p>
-<p><strong>Level1-&gt;Level2-&gt;Level3-&gt;Level 4</strong></p>
-<p>除此之外，每个版本的安卓API都有一个对应的 values-v{api} 文件夹存放各自需要自定义或覆写的样式和属性：</p>
-<p><strong>values, values-v11, values-v14, values-v21, values-v22, values-v23</strong></p>
-<h4 id="Level4"><a href="#Level4" class="headerlink" title="Level4"></a>Level4</h4><p>该层包含了Paltform.AppCompat 主题。该主题总是继承自当前版本的默认主题，例如：</p>
-<p><strong>values</strong></p>
-<p>Platform.AppCompat -&gt; android:Theme</p>
-<p><strong>values-v11</strong></p>
-<p>Platform.AppCompat -&gt; android:Theme.Holo</p>
-<p><strong>values-v21</strong></p>
-<p>Platform.AppCompat -&gt; android:Theme.Material</p>
-<h4 id="Level-3"><a href="#Level-3" class="headerlink" title="Level 3"></a>Level 3</h4><p>大部分工作在这一层被完成，Base.V7.Theme.AppCompat, Base.V11.Theme.AppCompat, Base.V21.Theme.AppCompat等也是在这一层被定义。这些主题都继承自 Platform.AppCompat。</p>
-<p><strong>values</strong></p>
-<p>Base.V7.Theme.AppCompat* → Platform.AppCompat → android:Theme</p>
-<p><strong>values-v11</strong></p>
-<p>Base.V11.Theme.AppCompat → Platform.AppCompat → android:Theme.Holo</p>
-<p><strong>values-v21</strong></p>
-<p>Base.V21.ThemeAppCompat → Base.V7.ThemeAppCompat → Platform.AppCompat → android:Theme.Material，还包括Base.V7.Theme.AppCompat.Light,Base.V7.Theme.Appcompat.Diaglog等。</p>
-<p>绝大多数属性和几乎所有工作在 Base.V{api}.Theme.AppCompat 中被定义和完成。ActionBar, DropwDown, ActionMode, Panel, List, Spinner, Toolbar 等控件中的所有属性都在这里被定义。</p>
-<h4 id="Level-2"><a href="#Level-2" class="headerlink" title="Level 2"></a>Level 2</h4><p>根据安卓的官方解释，我们在这一层拿到的主题只是第三层主题的别名：</p>
-<p>There are the themes which are pointers to the correct third level theme.They can also be used to set attributes for that specific platform (and platforms up until the next declaration).</p>
-<p><strong>values</strong></p>
-<p>Base.Theme.AppCompat* → Base.V7.Theme.AppCompat</p>
-<p><strong>values-v21</strong></p>
-<p>Base.Theme.AppCompat → Base.V21.Theme.AppCompat</p>
-<h4 id="Level-1"><a href="#Level-1" class="headerlink" title="Level 1"></a>Level 1</h4><p>Theme.AppCompat, Theme.AppCompat.Light, Theme.AppCompat.NoActionBar等主题在这里被定义。<strong>开发者应该使用这些主题，而非那些更底层的。</strong></p>
-<p><strong>values</strong></p>
-<p>Theme.AppCompat → Base.Theme.AppCompat</p>
-<h3 id="ThemeOverlays"><a href="#ThemeOverlays" class="headerlink" title="ThemeOverlays"></a>ThemeOverlays</h3><p>在所有可用的主题中，我们可以发现一个名字带有 ThemeOverlay 的系列：</p>
+        <p>Dagger2学习之基本概念<br>Dagger2是一个依赖注入（Dependency Injection简称DI）框架。它是Square公司的Dagger项目下的一个分支，由Google维护。依赖注入的概念，相信接触过spring开发的都比较熟悉，简单来说就是一个类A的生成如果需要另一个类B的实例，就说A依赖于B。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">class A&#123;</div><div class="line">	B b；</div><div class="line">	A()&#123;</div><div class="line">		b = new B();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面的实现方式没有任何注入，创建A时需要在A的构造函数内部创建一个B类，这么做的缺点是A和B的耦合太严重，如果B的构造函数变了，那么就需要修改A的构造函数。可以这样改进：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">class A&#123;</div><div class="line">	B b；</div><div class="line">	A(B b)&#123;</div><div class="line">		this.b = b;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上述代码实现了手动的注入，解除了A和B的耦合，起码B的代码有修改时不需要修改A了。但是手动注入在大型项目中也是一个很麻烦的过程，一堆无意义的重复劳动，还有依赖顺序的问题，如果B再依赖于C，C依赖于D，那么创建顺序也很容易把人整懵。依赖注入框架就可以帮我们做这个事，通过自动生成的代码来把要依赖的类注入到需要依赖的类中，这就是为什么需要依赖注入的原因。<br>为什么选择Dagger2呢？因为Dagger2是通过apt插件在编译期生成代码，通过注解处理器生成特定规则的代码，比一般注解框架的运行时注解性能上要强很多，减少了很多工作量。<br>下面简单介绍一下Dagger2中的几个概念.</p>
 <ul>
-<li>ThemeOverlay</li>
-<li>ThemeOverlay.Light</li>
-<li>ThemeOverlay.ActionBar.Light</li>
-<li>ThemeOverlay.ActionBar.Dark</li>
+<li>.@Inject<br>@inject注解用来标注一个类中要依赖的其他类，也用来标注一个被依赖的类的构造函数。</li>
 </ul>
-<p>这些主题又是做什么的呢？答案是 <strong>仅用于为特定的用途定义必要的属性。</strong> 例如 ThemeOverlay 主题只定义了 textColor，textAppearance，窗口的颜色属性和一些类似 <em>colorControlButton</em> 的属性；通常用作于 Toolbar 主题的 ThemeOverlay.ActionBar.Light，仅将 <em>colorControlButton</em> 的值定义为 <em>?attr:textColorSecondary</em>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">class A&#123;</div><div class="line">	@Inject</div><div class="line">	B b；</div><div class="line">	A()&#123;&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class B&#123;</div><div class="line">	@Inject</div><div class="line">	B()&#123;&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>通过@Inject注解，就可以把A要依赖的成员变量b和B类的构造函数对应起来。</p>
+<ul>
+<li>.@Component<br>Component注解类是一个接口或者抽象类，它用来连接依赖类和被依赖类。在当前的例子中，Component类需要引用A的实例，它会去查找A中标注了@Inject的成员，然后会查找该成员中标注了@Inject的构造函数，找到后就会初始化该成员并赋值，因此Component也可以叫它注解器（Injector）。</li>
+<li>.@Module<br>假设我们使用@Inject的方式进行注入，会面临一个问题，当需要注入一个第三方类库的类实例时，我们不可能去给对应的构造函数添加@Inject注解，此时@Module就派上用场了。使用@Module标注的类里提供一些创建类实例的方法，可以把第三方类库的类实例的生成方法生命在Module里，这样Module就成了一个提供类实例的类，然后还是通过Component来进行连接另一端的需要依赖类B的类A，这就是Component的另一个功能：管理Module。Component的modules属性可以把Module加入到Component中。</li>
+<li>@Provides<br>Component怎么跟Module关联起来呢？这就用到@Provides标注了，将Module中生产类实例的方法用@Provides标注，Component就会在找到类A中的标注的@Inject的成员b以后到它的module中寻找对应的@provides的创建B实例的方法了。<br>注意Component创建类实例有两个方法，一是通过@Inject标注的构造方法，二是通过Module中@Provides标注的方法创建。这两种方法是有优先级的，Component会优先从Module中查找，如果找到了对应方法则会停止查找并创建实例，如果没找到才会到被依赖类中查找@Inject标注的构造函数。</li>
+<li>限定符（Qualifier）<br>还是之前的例子，如果A依赖于B，并对b成员标注了@Inject，而B中有多个标注@Inject的构造函数时，Component该选择哪个呢？此时就用到限定符了。这种情况下可以给不同的构造方法用标识进行区分，相当于给每个方法一个索引，同时对应于A类中的成员b，也需要使用该标识来进行标注，这样就可以一一对应起来了。这个标识就是Qualifier注解。<br>今天先介绍这么多，Dagger2是一个非常好用的框架，学习起来比较难理解，以后会通过一些例子来边学习边总结。</li>
+</ul>
 
       
     </div>
     <div class="article-info article-info-index">
       
-      <a href="/2016/11/27/Android的Theme结构/" class="archive-article-date">
-  	<time datetime="2016-11-27T13:17:39.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-11-27</time>
+      <a href="/2016/12/11/Dagger2之基本概念/" class="archive-article-date">
+  	<time datetime="2016-12-11T09:58:27.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-12-11</time>
 </a>
       
       
@@ -195,18 +176,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2016/12/11/React-Native之Navigator/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2016/12/11/Dagger2之Scope、SubComponent/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          React Native之Navigator
+          Dagger2（2）Scope、SubComponent
         
       </div>
     </a>
   
   
-    <a href="/2016/11/25/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Hello World</div>
+    <a href="/2016/12/11/Gradle学习笔记/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Gradle学习笔记</div>
       <i class="icon-circle-right"></i>
     </a>
   

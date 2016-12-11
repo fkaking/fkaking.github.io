@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="http://yoursite.com">
+  <title>WebView的内存泄露 | 苟利国家生死已 岂因祸福避趋之</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="移动应用除了实现产品本身的功能以外，也是很多活动推广、运营需求以及展示广告的落点，这就需要一个实时性强，并且调整灵活的展现形式。无疑，html页面是最合适的选择（在React Native还没有大面积使用的情况下）。所以，移动端的webview几乎在每个应用中都会出现。但是在Android上使用webview的时候，如果不注意的话，还是有一些问题的。
+病历夹目前在很多地方用到了webview，比如">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WebView的内存泄露">
+<meta property="og:url" content="http://yoursite.com/2016/12/12/WebView的内存泄露/index.html">
+<meta property="og:site_name" content="苟利国家生死已 岂因祸福避趋之">
+<meta property="og:description" content="移动应用除了实现产品本身的功能以外，也是很多活动推广、运营需求以及展示广告的落点，这就需要一个实时性强，并且调整灵活的展现形式。无疑，html页面是最合适的选择（在React Native还没有大面积使用的情况下）。所以，移动端的webview几乎在每个应用中都会出现。但是在Android上使用webview的时候，如果不注意的话，还是有一些问题的。
+病历夹目前在很多地方用到了webview，比如">
+<meta property="og:updated_time" content="2016-12-11T17:01:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="WebView的内存泄露">
+<meta name="twitter:description" content="移动应用除了实现产品本身的功能以外，也是很多活动推广、运营需求以及展示广告的落点，这就需要一个实时性强，并且调整灵活的展现形式。无疑，html页面是最合适的选择（在React Native还没有大面积使用的情况下）。所以，移动端的webview几乎在每个应用中都会出现。但是在Android上使用webview的时候，如果不注意的话，还是有一些问题的。
+病历夹目前在很多地方用到了webview，比如">
+  
+    <link rel="alternative" href="/atom.xml" title="苟利国家生死已 岂因祸福避趋之" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="https://avatars2.githubusercontent.com/u/5449200?v=3&s=460">
+  
+  <link rel="stylesheet" href="/main.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img src="null" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">fkaking</a></h1>
+		</hgroup>
+
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+    			<a class="js-smart-menu" data-idx="0" href="javascript:void(0)">所有文章</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="1" href="javascript:void(0)">标签</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="2" href="javascript:void(0)">关于我</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/fkaking" title="github">github</a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-list"></i></div>
+  		<h1 class="header-author js-mobile-header hide">fkaking</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img src="null" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">fkaking</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/fkaking" title="github">github</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap">
+        <article id="post-WebView的内存泄露" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      WebView的内存泄露
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>移动应用除了实现产品本身的功能以外，也是很多活动推广、运营需求以及展示广告的落点，这就需要一个实时性强，并且调整灵活的展现形式。无疑，html页面是最合适的选择（在React Native还没有大面积使用的情况下）。所以，移动端的webview几乎在每个应用中都会出现。但是在Android上使用webview的时候，如果不注意的话，还是有一些问题的。</p>
+<p>病历夹目前在很多地方用到了webview，比如banner内容的展示、表单、诊疗圈、意见反馈等等。然而使用Debug版本带着Leak Canary运行的时候，每当关闭一个webview，几乎都会报一个内存泄露的问题。搜索了一下Android webview相关的内存泄露问题，总结了几种主流的解决方案。</p>
+<h2 id="一、-动态生成webview"><a href="#一、-动态生成webview" class="headerlink" title="一、 动态生成webview"></a>一、 动态生成webview</h2><p>要使用webview不造成内存泄露，首先应该做的就是不能在xml文件中定义webview节点，而是在需要的时候动态生成。即：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">WebView webView = new WebView(getApplicationContext());</div><div class="line">LinearLayout parent = findViewById(R.id.parent);</div><div class="line">parent.addView(webView);</div></pre></td></tr></table></figure>
+<p>然后一定要在Activity的onDestroy()中调用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">if(webView != null) &#123;</div><div class="line">	((ViewGroup)webView.getParent()).removeView(webView);</div><div class="line">	webView.destroy();</div><div class="line">	webView = null;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>需要注意的是，new WebView(Context context)时必须要传入ApplicationContext，如果传入Activity的Context的引用，那么对内存的引用会一直被保持。有人用次方法解决了Activity被销毁后依然不能释放Activity的问题，但是如果需要在webview中打开连接或者打开的页面中带有flash，或者webview想弹出一个dialog，都会导致从ApplicationContext到Activity Context的强制类型转换错误，从而导致应用崩溃。这是因为在以上提到的操作中，系统会把webview当做父控件，然后在该空间上绘制内容，它想找一个Activity的context来绘制，但是传入的却不是Activity的context，导致出错。</p>
+<h2 id="二、使用反射清空引用"><a href="#二、使用反射清空引用" class="headerlink" title="二、使用反射清空引用"></a>二、使用反射清空引用</h2><p>内存泄露是由于webview持有activity引用导致的，那么可不可以利用反射的特性把它持有的一你用清空呢？有人给出了这样的解决方案：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">	public void setConfigCallback(WindowManager windowManager) &#123;</div><div class="line">    try &#123;</div><div class="line">        Field field = WebView.class.getDeclaredField(&quot;mWebViewCore&quot;);</div><div class="line">        field = field.getType().getDeclaredField(&quot;mBrowserFrame&quot;);</div><div class="line">        field = field.getType().getDeclaredField(&quot;sConfigCallback&quot;);</div><div class="line">        field.setAccessible(true);</div><div class="line">        Object configCallback = field.get(null);</div><div class="line"></div><div class="line">        if (null == configCallback) &#123;</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        field = field.getType().getDeclaredField(&quot;mWindowManager&quot;);</div><div class="line">        field.setAccessible(true);</div><div class="line">        field.set(configCallback, windowManager);</div><div class="line">    &#125; catch(Exception e) &#123;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>然后在Activity中调用上面的方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">public void onCreate(Bundle savedInstanceState) &#123;								super.onCreate(savedInstanceState);</div><div class="line">		setConfigCallback((WindowManager)getApplicationContext().getSystemService(Context.WINDOW_SERVICE));</div><div class="line">&#125;</div><div class="line">	</div><div class="line">public void onDestroy() &#123;</div><div class="line">    setConfigCallback(null);</div><div class="line">    super.onDestroy();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>但是该方法并不是一劳永逸的，随着SDK的升级，很可能就不好用了。</p>
+<h2 id="三、开启新进程"><a href="#三、开启新进程" class="headerlink" title="三、开启新进程"></a>三、开启新进程</h2><p>在webview中开启新进程运行它，关闭的时候直接退出进程，也不需要关心什么持有不持有了，毕竟连进程都被杀死了。这个方法目前来讲是比较简单粗暴但是又很有效果的做法。</p>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/12/12/WebView的内存泄露/" class="archive-article-date">
+  	<time datetime="2016-12-11T16:22:27.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-12-12</time>
+</a>
+      
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2016/12/11/Dagger2之Scope、SubComponent/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Dagger2（2）Scope、SubComponent</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+
+
+
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 fkaking
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/",
+		innerArchive: true
+	}
+</script>
+
+<script src="/./main.js"></script>
+
+
+    
+<div class="tools-col">
+  <ul class="btn-wrap">
+    
+      <li class="chose" data-hook="tools-section-all"><span class="text">全部</span><i class="icon-book"></i></li>
+    
+    
+      <li data-hook="tools-section-tag"><span class="text">标签</span><i class="icon-price-tags"></i></li>
+    
+    
+    
+      <li data-hook="tools-section-me"><span class="text">我</span><i class="icon-smile"></i></li>
+    
+  </ul>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all chose">
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-tag">
+    			<div class="widget tagcloud" id="js-tagcloud">
+    				
+    			</div>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">苟利国家生死已&lt;br&gt;岂因祸福避趋之</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>

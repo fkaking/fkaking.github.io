@@ -6,18 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Android的Theme结构 | 苟利国家生死已 岂因祸福避趋之</title>
+  <title>Dagger2（2）Scope、SubComponent | 苟利国家生死已 岂因祸福避趋之</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前段时间的开发过程中涉及到了应用Theme的修改，改了以后发现很多问题，Theme复杂的结构和层级，也令人困惑。今天对这部分知识做一个小整理。当使用安卓主题和支持库时，你可能会遇见过这些名字：Theme.AppCompat, Theme.Base.AppCompat, Base.V7.Theme.AppCompat, Base.v11.Theme.AppCompat, Base.v21.Theme">
+  <meta name="description" content="Dagger2学习（二）–Scope、SubCompontent
+除了Module、Provides、Compontent、Qualifier以外，Dagger2还有两个重要的概念：Scope和SubCompontent。
+##一、Scope一般在Module和Compontent前面都会加上@Singleton，这表示Dagger里的Scope的概念。这个概念主要是为了解决对象生命周期的问题。联">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android的Theme结构">
-<meta property="og:url" content="http://yoursite.com/2016/11/27/Android的Theme结构/index.html">
+<meta property="og:title" content="Dagger2（2）Scope、SubComponent">
+<meta property="og:url" content="http://yoursite.com/2016/12/11/Dagger2之Scope、SubComponent/index.html">
 <meta property="og:site_name" content="苟利国家生死已 岂因祸福避趋之">
-<meta property="og:description" content="前段时间的开发过程中涉及到了应用Theme的修改，改了以后发现很多问题，Theme复杂的结构和层级，也令人困惑。今天对这部分知识做一个小整理。当使用安卓主题和支持库时，你可能会遇见过这些名字：Theme.AppCompat, Theme.Base.AppCompat, Base.V7.Theme.AppCompat, Base.v11.Theme.AppCompat, Base.v21.Theme">
-<meta property="og:updated_time" content="2016-11-27T14:29:46.000Z">
+<meta property="og:description" content="Dagger2学习（二）–Scope、SubCompontent
+除了Module、Provides、Compontent、Qualifier以外，Dagger2还有两个重要的概念：Scope和SubCompontent。
+##一、Scope一般在Module和Compontent前面都会加上@Singleton，这表示Dagger里的Scope的概念。这个概念主要是为了解决对象生命周期的问题。联">
+<meta property="og:updated_time" content="2016-12-11T10:02:59.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android的Theme结构">
-<meta name="twitter:description" content="前段时间的开发过程中涉及到了应用Theme的修改，改了以后发现很多问题，Theme复杂的结构和层级，也令人困惑。今天对这部分知识做一个小整理。当使用安卓主题和支持库时，你可能会遇见过这些名字：Theme.AppCompat, Theme.Base.AppCompat, Base.V7.Theme.AppCompat, Base.v11.Theme.AppCompat, Base.v21.Theme">
+<meta name="twitter:title" content="Dagger2（2）Scope、SubComponent">
+<meta name="twitter:description" content="Dagger2学习（二）–Scope、SubCompontent
+除了Module、Provides、Compontent、Qualifier以外，Dagger2还有两个重要的概念：Scope和SubCompontent。
+##一、Scope一般在Module和Compontent前面都会加上@Singleton，这表示Dagger里的Scope的概念。这个概念主要是为了解决对象生命周期的问题。联">
   
     <link rel="alternative" href="/atom.xml" title="苟利国家生死已 岂因祸福避趋之" type="application/atom+xml">
   
@@ -120,7 +126,7 @@
 </nav>
 
       <div class="body-wrap">
-        <article id="post-Android的Theme结构" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-Dagger2之Scope、SubComponent" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <input type="hidden" class="isFancy" />
@@ -130,7 +136,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Android的Theme结构
+      Dagger2（2）Scope、SubComponent
     </h1>
   
 
@@ -138,51 +144,26 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>前段时间的开发过程中涉及到了应用Theme的修改，改了以后发现很多问题，Theme复杂的结构和层级，也令人困惑。今天对这部分知识做一个小整理。<br>当使用安卓主题和支持库时，你可能会遇见过这些名字：<br>Theme.AppCompat, Theme.Base.AppCompat, Base.V7.Theme.AppCompat, Base.v11.Theme.AppCompat, Base.v21.Theme.AppCompat, ThemeOverlay, Platform.AppCompat, DeviceDefault, Material, Holo, Classic 等等……<br>这些主题是怎么组织起来的？我们应该怎么选择呢？</p>
-<h2 id="AppCompat-v7"><a href="#AppCompat-v7" class="headerlink" title="AppCompat v7"></a>AppCompat v7</h2><p>不同的安卓平台定义了不同的主题、样式和属性，最初安卓主题的层级非常繁杂，而且很不直观。知道v7包的到来，它带来了全新的主题架构，使得所有安卓平台自API v7 以后能够获得一致的材料外观（Material apperance）。Base.V…和Platform.Appcompat正式在这个时候被加入进来的。</p>
-<p>在Appcompat中，主题被划分成四个层级，每个层级继承自更低一层：</p>
-<p><strong>Level1-&gt;Level2-&gt;Level3-&gt;Level 4</strong></p>
-<p>除此之外，每个版本的安卓API都有一个对应的 values-v{api} 文件夹存放各自需要自定义或覆写的样式和属性：</p>
-<p><strong>values, values-v11, values-v14, values-v21, values-v22, values-v23</strong></p>
-<h4 id="Level4"><a href="#Level4" class="headerlink" title="Level4"></a>Level4</h4><p>该层包含了Paltform.AppCompat 主题。该主题总是继承自当前版本的默认主题，例如：</p>
-<p><strong>values</strong></p>
-<p>Platform.AppCompat -&gt; android:Theme</p>
-<p><strong>values-v11</strong></p>
-<p>Platform.AppCompat -&gt; android:Theme.Holo</p>
-<p><strong>values-v21</strong></p>
-<p>Platform.AppCompat -&gt; android:Theme.Material</p>
-<h4 id="Level-3"><a href="#Level-3" class="headerlink" title="Level 3"></a>Level 3</h4><p>大部分工作在这一层被完成，Base.V7.Theme.AppCompat, Base.V11.Theme.AppCompat, Base.V21.Theme.AppCompat等也是在这一层被定义。这些主题都继承自 Platform.AppCompat。</p>
-<p><strong>values</strong></p>
-<p>Base.V7.Theme.AppCompat* → Platform.AppCompat → android:Theme</p>
-<p><strong>values-v11</strong></p>
-<p>Base.V11.Theme.AppCompat → Platform.AppCompat → android:Theme.Holo</p>
-<p><strong>values-v21</strong></p>
-<p>Base.V21.ThemeAppCompat → Base.V7.ThemeAppCompat → Platform.AppCompat → android:Theme.Material，还包括Base.V7.Theme.AppCompat.Light,Base.V7.Theme.Appcompat.Diaglog等。</p>
-<p>绝大多数属性和几乎所有工作在 Base.V{api}.Theme.AppCompat 中被定义和完成。ActionBar, DropwDown, ActionMode, Panel, List, Spinner, Toolbar 等控件中的所有属性都在这里被定义。</p>
-<h4 id="Level-2"><a href="#Level-2" class="headerlink" title="Level 2"></a>Level 2</h4><p>根据安卓的官方解释，我们在这一层拿到的主题只是第三层主题的别名：</p>
-<p>There are the themes which are pointers to the correct third level theme.They can also be used to set attributes for that specific platform (and platforms up until the next declaration).</p>
-<p><strong>values</strong></p>
-<p>Base.Theme.AppCompat* → Base.V7.Theme.AppCompat</p>
-<p><strong>values-v21</strong></p>
-<p>Base.Theme.AppCompat → Base.V21.Theme.AppCompat</p>
-<h4 id="Level-1"><a href="#Level-1" class="headerlink" title="Level 1"></a>Level 1</h4><p>Theme.AppCompat, Theme.AppCompat.Light, Theme.AppCompat.NoActionBar等主题在这里被定义。<strong>开发者应该使用这些主题，而非那些更底层的。</strong></p>
-<p><strong>values</strong></p>
-<p>Theme.AppCompat → Base.Theme.AppCompat</p>
-<h3 id="ThemeOverlays"><a href="#ThemeOverlays" class="headerlink" title="ThemeOverlays"></a>ThemeOverlays</h3><p>在所有可用的主题中，我们可以发现一个名字带有 ThemeOverlay 的系列：</p>
+        <p>Dagger2学习（二）–Scope、SubCompontent</p>
+<p>除了Module、Provides、Compontent、Qualifier以外，Dagger2还有两个重要的概念：Scope和SubCompontent。</p>
+<p>##一、Scope<br>一般在Module和Compontent前面都会加上@Singleton，这表示Dagger里的Scope的概念。这个概念主要是为了解决对象生命周期的问题。联想一下android开发的日常，activity的一堆生命周期方法，各种application级别的单例，用户登录状态等等，Scope跟这些概念不谋而合。<br>@singleton是Dagger框架定义的唯一的Scope，我们可以定义自己的Scope。<br>以下是@singleton的源码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@Scope</div><div class="line">@Documented</div><div class="line">@Retention(RUNTIME)</div><div class="line">public @interface Singleton&#123;&#125;</div></pre></td></tr></table></figure>
+<p>我们可以定义自己的Scope，比如定义一个跟Activity生命周期相同的Scope：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@Scope</div><div class="line">@Documented</div><div class="line">@Retention(RUNTIME)</div><div class="line">public @interface PerActivity&#123;&#125;</div></pre></td></tr></table></figure>
+<p>@Scope：注明是Scope<br>@Documented：标记在文档<br>@Retention（RUNTIME）：指定注解的解析时机，这里是运行时级别<br>那么为什么要自己定义Scope呢？是不是定义一个PerActivity的scope就可以完美实现和activity一样的生命周期了？当然没有那么神奇。实际上，并不是只有@Singleton注解的compontent产生的依赖才是单例，只要使用了scope注解，就都是单例的，只要不使用，就是每次都生成新的实例。Dagger框架不会帮你管理依赖的生命周期，需要开发者自己来控制。说白了，使用了PerActivity的scope以后，要在宿主activity的onCreate方法和onDestroy方法里控制compontent的生命周期，好坑。。。可是为什么还要大费周折的自定义scope呢？原因有二：</p>
 <ul>
-<li>ThemeOverlay</li>
-<li>ThemeOverlay.Light</li>
-<li>ThemeOverlay.ActionBar.Light</li>
-<li>ThemeOverlay.ActionBar.Dark</li>
+<li>1.作为标识，提高可读性，告诉开发者每一个依赖应该怎么组织管理。</li>
+<li>2.管理Compontent之间的组织关系。<br>第二条暂时按下不表，从第一条来看，我认为scope带有一定的注释的作用，它可以告诉开发者，你现在用的这个依赖应该在什么产生，在什么时候应该销毁掉。<br>这就是Scope的意义。<h2 id="二、SubCompontent"><a href="#二、SubCompontent" class="headerlink" title="二、SubCompontent"></a>二、SubCompontent</h2>当一个Compontent不能满足你的需求时，你需要对它进行扩展。一种办法是使用Component(dependencies=××.classs)。另外一种是使用@Subcomponent，Subcomponent用于拓展原有component。同时，这将产生一种副作用——子component同时具备两种不同生命周期的scope。子Component具备了父Component拥有的Scope，也具备了自己的Scope。<br>需要注意的是：两个拥有依赖关系的Compontent不能拥有相同的生命周期。为啥？看<a href="https://github.com/google/dagger/issues/107#issuecomment-71073298" target="_blank" rel="external">Jake Wharton的解释</a>：</li>
 </ul>
-<p>这些主题又是做什么的呢？答案是 <strong>仅用于为特定的用途定义必要的属性。</strong> 例如 ThemeOverlay 主题只定义了 textColor，textAppearance，窗口的颜色属性和一些类似 <em>colorControlButton</em> 的属性；通常用作于 Toolbar 主题的 ThemeOverlay.ActionBar.Light，仅将 <em>colorControlButton</em> 的值定义为 <em>?attr:textColorSecondary</em>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Component1 c1 = Dagger_Component1.create();</div><div class="line">Component2 c2_a = Dagger_Component2.builder().component1(c1).build();</div><div class="line">Component2 c2_b = Dagger_Component2.builder().component1(c1).build();</div></pre></td></tr></table></figure>
+<p>先解释一下第2行代码：这里Component2依赖了Component1，使用的是Component(dependencies=××.classs)的方式，在创建Component2的实例时，需要调用component1()方法。<br>好了，分析一下上面的代码：Component2依赖于Component1，并且两者的scope相同，那么Component2中没有的实例必须在Component1中有，假设这个实例是v（不一定只有一个），那么c1中拥有唯一的v；而c2_a和c2_b是component2的不同实例，他们应该拥有两个不同的实例v，前后矛盾，这么做打破了scope的作用范围，因此，在dagger中是不允许这么做的，也表明了scope的意义之一：管理Component之间的组织。“This is by design.”</p>
 
       
     </div>
     <div class="article-info article-info-index">
       
-      <a href="/2016/11/27/Android的Theme结构/" class="archive-article-date">
-  	<time datetime="2016-11-27T13:17:39.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-11-27</time>
+      <a href="/2016/12/11/Dagger2之Scope、SubComponent/" class="archive-article-date">
+  	<time datetime="2016-12-11T10:00:50.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-12-11</time>
 </a>
       
       
@@ -195,18 +176,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2016/12/11/React-Native之Navigator/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2016/12/12/WebView的内存泄露/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          React Native之Navigator
+          WebView的内存泄露
         
       </div>
     </a>
   
   
-    <a href="/2016/11/25/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Hello World</div>
+    <a href="/2016/12/11/Dagger2之基本概念/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Dagger2 基本概念</div>
       <i class="icon-circle-right"></i>
     </a>
   
