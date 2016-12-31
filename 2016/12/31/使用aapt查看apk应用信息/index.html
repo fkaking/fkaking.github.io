@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="http://yoursite.com">
+  <title>使用aapt查看apk应用信息 | 苟利国家生死已 岂因祸福避趋之</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="如果从一个Android应用的APK文件中获取minSDKVersion，targetSdkVersion，permissions,configurations等应用信息，很多人的第一反应是把.apk文件重命名为.zip，然后解压，找到AndroidManifest.xml文件，然后从里面找对应信息。但是事与愿违，当你打开这个文件时，内容是这样的：
+123456789101112131415161">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用aapt查看apk应用信息">
+<meta property="og:url" content="http://yoursite.com/2016/12/31/使用aapt查看apk应用信息/index.html">
+<meta property="og:site_name" content="苟利国家生死已 岂因祸福避趋之">
+<meta property="og:description" content="如果从一个Android应用的APK文件中获取minSDKVersion，targetSdkVersion，permissions,configurations等应用信息，很多人的第一反应是把.apk文件重命名为.zip，然后解压，找到AndroidManifest.xml文件，然后从里面找对应信息。但是事与愿违，当你打开这个文件时，内容是这样的：
+123456789101112131415161">
+<meta property="og:updated_time" content="2016-12-31T05:35:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用aapt查看apk应用信息">
+<meta name="twitter:description" content="如果从一个Android应用的APK文件中获取minSDKVersion，targetSdkVersion，permissions,configurations等应用信息，很多人的第一反应是把.apk文件重命名为.zip，然后解压，找到AndroidManifest.xml文件，然后从里面找对应信息。但是事与愿违，当你打开这个文件时，内容是这样的：
+123456789101112131415161">
+  
+    <link rel="alternative" href="/atom.xml" title="苟利国家生死已 岂因祸福避趋之" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="https://avatars2.githubusercontent.com/u/5449200?v=3&s=460">
+  
+  <link rel="stylesheet" href="/main.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img src="null" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">fkaking</a></h1>
+		</hgroup>
+
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+    			<a class="js-smart-menu" data-idx="0" href="javascript:void(0)">所有文章</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="1" href="javascript:void(0)">标签</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="2" href="javascript:void(0)">关于我</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/fkaking" title="github">github</a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-list"></i></div>
+  		<h1 class="header-author js-mobile-header hide">fkaking</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img src="null" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">fkaking</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/fkaking" title="github">github</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap">
+        <article id="post-使用aapt查看apk应用信息" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      使用aapt查看apk应用信息
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>如果从一个Android应用的APK文件中获取minSDKVersion，targetSdkVersion，permissions,configurations等应用信息，很多人的第一反应是把.apk文件重命名为.zip，然后解压，找到AndroidManifest.xml文件，然后从里面找对应信息。但是事与愿违，当你打开这个文件时，内容是这样的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">0300 0800 b8f4 0000 0100 1c00 f87e 0000</div><div class="line">4a01 0000 0000 0000 0000 0000 4405 0000</div><div class="line">0000 0000 0000 0000 1a00 0000 3400 0000</div><div class="line">5200 0000 7600 0000 8200 0000 a400 0000</div><div class="line">b800 0000 d600 0000 f000 0000 fc00 0000</div><div class="line">0a01 0000 2001 0000 3a01 0000 4801 0000</div><div class="line">6001 0000 7801 0000 8601 0000 9a01 0000</div><div class="line">b801 0000 de01 0000 ee01 0000 1802 0000</div><div class="line">3002 0000 4a02 0000 7402 0000 8602 0000</div><div class="line">9802 0000 ac02 0000 c402 0000 e002 0000</div><div class="line">f202 0000 4a03 0000 4e03 0000 6003 0000</div><div class="line">9403 0000 c803 0000 dc03 0000 1204 0000</div><div class="line">2e04 0000 3604 0000 4004 0000 5404 0000</div><div class="line">6c04 0000 d604 0000 f804 0000 4e05 0000</div><div class="line">a005 0000 dc05 0000 1806 0000 6206 0000</div><div class="line">c606 0000 2e07 0000 6407 0000 a207 0000</div><div class="line">e407 0000 0008 0000 3208 0000 7808 0000</div><div class="line">b208 0000 0409 0000 4e09 0000 aa09 0000</div><div class="line">000a 0000 380a 0000 840a 0000 c20a 0000</div><div class="line">fa0a 0000 3c0b 0000 680b 0000 ac0b 0000</div><div class="line">f60b 0000 420c 0000 940c 0000 ea0c 0000</div><div class="line">4e0d 0000 a60d 0000 ec0d 0000 280e 0000</div><div class="line">860e 0000 da0e 0000 240f 0000 760f 0000</div><div class="line">d20f 0000 0e10 0000 5210 0000 a210 0000</div><div class="line">bc10 0000 2811 0000 3e11 0000 6211 0000</div><div class="line">9611 0000 aa11 0000 0a12 0000 2812 0000</div><div class="line">3812 0000 7a12 0000 8e12 0000 d012 0000</div><div class="line">e212 0000 4013 0000 8e13 0000 b013 0000</div><div class="line">d413 0000 f413 0000 1614 0000 ac14 0000</div><div class="line">e414 0000 2815 0000 6c15 0000 ba15 0000</div><div class="line">c615 0000 f015 0000 2816 0000 6e16 0000</div><div class="line">0c17 0000 8c17 0000 0a18 0000 8818 0000</div></pre></td></tr></table></figure>
+<p>这个披着xml外衣的文件已经不再是人类可读的格式。</p>
+<p>其实在Android SDK目录下，已经有这样一个工具可以做到以上的需求，那就是aapt。</p>
+<p>aapt（Android Asset Packaging Tool）可以用来列举、添加、移除APK包里的文件，打包资源或者压缩PNG文件等。这个工具安装在<code>&lt;path_to_android_sdk&gt;/build-tools/&lt;build_tool_version_such_as_24.0.2&gt;/aapt</code></p>
+<p>目录下。首先看下它有哪些命令：</p>
+<ul>
+<li><p><code>aapt list</code> - 列举 ZIP, JAR 或者 APK 文件里的内容。</p>
+</li>
+<li><p><code>aapt dump</code> - 从 APK 文件里导出指定的信息。</p>
+</li>
+<li><p><code>aapt package</code> - 打包 Android 资源。</p>
+</li>
+<li><p><code>aapt remove</code> - 删除 ZIP、JAR 或者 APK 文件里的内容。</p>
+</li>
+<li><p><code>aapt add</code> - 把文件添加到 ZIP、JAR 或者 APK 文件里。</p>
+</li>
+<li><p><code>aapt crunch</code> - 压缩 PNG 文件。</p>
+<p>对病历夹app的apk文件执行dump命令：<code>aapt dump badging app-debug.apk</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div></pre></td><td class="code"><pre><div class="line">package: name=&apos;com.apricotforest.dossier&apos; versionCode=&apos;97&apos; versionName=&apos;4.36.0-debug&apos;</div><div class="line">sdkVersion:&apos;16&apos;</div><div class="line">targetSdkVersion:&apos;21&apos;</div><div class="line">uses-permission:&apos;com.apricotforest.dossier.permission.MIPUSH_RECEIVE&apos;</div><div class="line">uses-permission:&apos;android.permission.ACCESS_COARSE_LOCATION&apos;</div><div class="line">uses-permission:&apos;android.permission.ACCESS_FINE_LOCATION&apos;</div><div class="line">uses-permission:&apos;android.permission.READ_LOGS&apos;</div><div class="line">uses-permission:&apos;android.permission.GET_TASKS&apos;</div><div class="line">uses-permission:&apos;android.permission.DISABLE_KEYGUARD&apos;</div><div class="line">uses-permission:&apos;com.android.launcher.permission.INSTALL_SHORTCUT&apos;</div><div class="line">uses-permission:&apos;com.android.launcher.permission.UNINSTALL_SHORTCUT&apos;</div><div class="line">uses-permission:&apos;android.permission.CAMERA&apos;</div><div class="line">uses-permission:&apos;android.permission.FLASHLIGHT&apos;</div><div class="line">uses-permission:&apos;android.permission.RECORD_AUDIO&apos;</div><div class="line">uses-feature:&apos;android.hardware.camera&apos;</div><div class="line">uses-feature:&apos;android.hardware.camera.autofocus&apos;</div><div class="line">uses-permission:&apos;android.permission.INTERNET&apos;</div><div class="line">uses-permission:&apos;android.permission.ACCESS_NETWORK_STATE&apos;</div><div class="line">uses-permission:&apos;android.permission.READ_PHONE_STATE&apos;</div><div class="line">uses-permission:&apos;android.permission.MOUNT_UNMOUNT_FILESYSTEMS&apos;</div><div class="line">uses-permission:&apos;android.permission.WRITE_EXTERNAL_STORAGE&apos;</div><div class="line">uses-permission:&apos;android.permission.VIBRATE&apos;</div><div class="line">uses-permission:&apos;android.permission.ACCESS_WIFI_STATE&apos;</div><div class="line">uses-permission:&apos;android.permission.CALL_PHONE&apos;</div><div class="line">uses-feature-not-required:&apos;android.hardware.telephony&apos;</div><div class="line">uses-feature-not-required:&apos;android.hardware.telephony.cdma&apos;</div><div class="line">uses-feature-not-required:&apos;android.hardware.gsm&apos;</div><div class="line">uses-permission:&apos;android.permission.READ_CONTACTS&apos;</div><div class="line">uses-permission:&apos;android.permission.RESTART_PACKAGES&apos;</div><div class="line">uses-permission:&apos;android.permission.CHANGE_WIFI_STATE&apos;</div><div class="line">uses-permission:&apos;android.permission.CHANGE_CONFIGURATION&apos;</div><div class="line">uses-permission:&apos;android.permission.RECEIVE_BOOT_COMPLETED&apos;</div><div class="line">uses-permission:&apos;android.permission.DOWNLOAD_WITHOUT_NOTIFICATION&apos;</div><div class="line">uses-permission:&apos;android.permission.ACCESS_DOWNLOAD_MANAGER&apos;</div><div class="line">uses-permission:&apos;android.permission.WRITE_SETTINGS&apos;</div><div class="line">uses-permission:&apos;android.permission.WAKE_LOCK&apos;</div><div class="line">uses-permission:&apos;com.android.launcher.permission.READ_SETTINGS&apos;</div><div class="line">uses-permission:&apos;android.permission.READ_EXTERNAL_STORAGE&apos;</div><div class="line">uses-permission:&apos;android.permission.BROADCAST_STICKY&apos;</div><div class="line">uses-permission:&apos;android.permission.RECEIVE_USER_PRESENT&apos;</div><div class="line">uses-permission:&apos;android.permission.KILL_BACKGROUND_PROCESSES&apos;</div><div class="line">uses-permission:&apos;android.permission.BLUETOOTH&apos;</div><div class="line">uses-permission:&apos;android.permission.BATTERY_STATS&apos;</div><div class="line">uses-permission:&apos;android.permission.SYSTEM_ALERT_WINDOW&apos;</div><div class="line">application-label:&apos;病历夹&apos;</div><div class="line">application-label-ca:&apos;病历夹&apos;</div><div class="line">application-label-da:&apos;病历夹&apos;</div><div class="line">application-label-fa:&apos;病历夹&apos;</div><div class="line">application-label-ja:&apos;病历夹&apos;</div><div class="line">application-label-nb:&apos;病历夹&apos;</div><div class="line">application-label-de:&apos;病历夹&apos;</div><div class="line">application-label-af:&apos;病历夹&apos;</div><div class="line">application-label-bg:&apos;病历夹&apos;</div><div class="line">application-label-th:&apos;病历夹&apos;</div><div class="line">application-label-fi:&apos;病历夹&apos;</div><div class="line">application-label-hi:&apos;病历夹&apos;</div><div class="line">application-label-vi:&apos;病历夹&apos;</div><div class="line">application-label-sk:&apos;病历夹&apos;</div><div class="line">application-label-uk:&apos;病历夹&apos;</div><div class="line">application-label-el:&apos;病历夹&apos;</div><div class="line">application-label-nl:&apos;病历夹&apos;</div><div class="line">application-label-pl:&apos;病历夹&apos;</div><div class="line">application-label-sl:&apos;病历夹&apos;</div><div class="line">application-label-tl:&apos;病历夹&apos;</div><div class="line">application-label-am:&apos;病历夹&apos;</div><div class="line">application-label-in:&apos;病历夹&apos;</div><div class="line">application-label-ko:&apos;病历夹&apos;</div><div class="line">application-label-ro:&apos;病历夹&apos;</div><div class="line">application-label-ar:&apos;病历夹&apos;</div><div class="line">application-label-fr:&apos;病历夹&apos;</div><div class="line">application-label-hr:&apos;病历夹&apos;</div><div class="line">application-label-sr:&apos;病历夹&apos;</div><div class="line">application-label-tr:&apos;病历夹&apos;</div><div class="line">application-label-cs:&apos;病历夹&apos;</div><div class="line">application-label-es:&apos;病历夹&apos;</div><div class="line">application-label-it:&apos;病历夹&apos;</div><div class="line">application-label-lt:&apos;病历夹&apos;</div><div class="line">application-label-pt:&apos;病历夹&apos;</div><div class="line">application-label-hu:&apos;病历夹&apos;</div><div class="line">application-label-ru:&apos;病历夹&apos;</div><div class="line">application-label-zu:&apos;病历夹&apos;</div><div class="line">application-label-lv:&apos;病历夹&apos;</div><div class="line">application-label-sv:&apos;病历夹&apos;</div><div class="line">application-label-iw:&apos;病历夹&apos;</div><div class="line">application-label-sw:&apos;病历夹&apos;</div><div class="line">application-label-bs_BA:&apos;病历夹&apos;</div><div class="line">application-label-fr_CA:&apos;病历夹&apos;</div><div class="line">application-label-lo_LA:&apos;病历夹&apos;</div><div class="line">application-label-en_GB:&apos;病历夹&apos;</div><div class="line">application-label-bn_BD:&apos;病历夹&apos;</div><div class="line">application-label-et_EE:&apos;病历夹&apos;</div><div class="line">application-label-ka_GE:&apos;病历夹&apos;</div><div class="line">application-label-ky_KG:&apos;病历夹&apos;</div><div class="line">application-label-km_KH:&apos;病历夹&apos;</div><div class="line">application-label-zh_HK:&apos;病历夹&apos;</div><div class="line">application-label-si_LK:&apos;病历夹&apos;</div><div class="line">application-label-mk_MK:&apos;病历夹&apos;</div><div class="line">application-label-ur_PK:&apos;病历夹&apos;</div><div class="line">application-label-sq_AL:&apos;病历夹&apos;</div><div class="line">application-label-hy_AM:&apos;病历夹&apos;</div><div class="line">application-label-my_MM:&apos;病历夹&apos;</div><div class="line">application-label-zh_CN:&apos;病历夹&apos;</div><div class="line">application-label-pa_IN:&apos;病历夹&apos;</div><div class="line">application-label-ta_IN:&apos;病历夹&apos;</div><div class="line">application-label-te_IN:&apos;病历夹&apos;</div><div class="line">application-label-ml_IN:&apos;病历夹&apos;</div><div class="line">application-label-en_IN:&apos;病历夹&apos;</div><div class="line">application-label-kn_IN:&apos;病历夹&apos;</div><div class="line">application-label-mr_IN:&apos;病历夹&apos;</div><div class="line">application-label-gu_IN:&apos;病历夹&apos;</div><div class="line">application-label-mn_MN:&apos;病历夹&apos;</div><div class="line">application-label-ne_NP:&apos;病历夹&apos;</div><div class="line">application-label-pt_BR:&apos;病历夹&apos;</div><div class="line">application-label-gl_ES:&apos;病历夹&apos;</div><div class="line">application-label-eu_ES:&apos;病历夹&apos;</div><div class="line">application-label-is_IS:&apos;病历夹&apos;</div><div class="line">application-label-es_US:&apos;病历夹&apos;</div><div class="line">application-label-pt_PT:&apos;病历夹&apos;</div><div class="line">application-label-en_AU:&apos;病历夹&apos;</div><div class="line">application-label-zh_TW:&apos;病历夹&apos;</div><div class="line">application-label-be_BY:&apos;病历夹&apos;</div><div class="line">application-label-ms_MY:&apos;病历夹&apos;</div><div class="line">application-label-az_AZ:&apos;病历夹&apos;</div><div class="line">application-label-kk_KZ:&apos;病历夹&apos;</div><div class="line">application-label-uz_UZ:&apos;病历夹&apos;</div><div class="line">application-icon-120:&apos;res/drawable-xxhdpi-v4/icon.png&apos;</div><div class="line">application-icon-160:&apos;res/drawable-xxhdpi-v4/icon.png&apos;</div><div class="line">application-icon-240:&apos;res/drawable-xxhdpi-v4/icon.png&apos;</div><div class="line">application-icon-320:&apos;res/drawable-xxhdpi-v4/icon.png&apos;</div><div class="line">application-icon-480:&apos;res/drawable-xxhdpi-v4/icon.png&apos;</div><div class="line">application-icon-65534:&apos;res/drawable-xxhdpi-v4/icon.png&apos;</div><div class="line">application-icon-65535:&apos;res/drawable-xxhdpi-v4/icon.png&apos;</div><div class="line">application: label=&apos;病历夹&apos; icon=&apos;res/drawable-xxhdpi-v4/icon.png&apos;</div><div class="line">application-debuggable</div><div class="line">launchable-activity: name=&apos;com.apricotforest.dossier.medicalrecord.activity.main.MainLoadingActivity&apos;  label=&apos;病历夹&apos; icon=&apos;&apos;</div><div class="line">launchable-activity: name=&apos;com.squareup.leakcanary.internal.DisplayLeakActivity&apos;  label=&apos;Leaks&apos; icon=&apos;res/drawable-xxhdpi-v4/leak_canary_icon.png&apos;</div><div class="line">uses-feature:&apos;android.hardware.location&apos;</div><div class="line">uses-implied-feature:&apos;android.hardware.location&apos;,&apos;requested a location access permission&apos;</div><div class="line">uses-feature:&apos;android.hardware.location.gps&apos;</div><div class="line">uses-implied-feature:&apos;android.hardware.location.gps&apos;,&apos;requested android.permission.ACCESS_FINE_LOCATION permission&apos;</div><div class="line">uses-feature:&apos;android.hardware.location.network&apos;</div><div class="line">uses-implied-feature:&apos;android.hardware.location.network&apos;,&apos;requested android.permission.ACCESS_COURSE_LOCATION permission&apos;</div><div class="line">uses-feature:&apos;android.hardware.bluetooth&apos;</div><div class="line">uses-implied-feature:&apos;android.hardware.bluetooth&apos;,&apos;requested android.permission.BLUETOOTH or android.permission.BLUETOOTH_ADMIN permission and targetSdkVersion &gt; 4&apos;</div><div class="line">uses-feature:&apos;android.hardware.microphone&apos;</div><div class="line">uses-implied-feature:&apos;android.hardware.microphone&apos;,&apos;requested android.permission.RECORD_AUDIO permission&apos;</div><div class="line">uses-feature:&apos;android.hardware.wifi&apos;</div><div class="line">uses-implied-feature:&apos;android.hardware.wifi&apos;,&apos;requested android.permission.ACCESS_WIFI_STATE, android.permission.CHANGE_WIFI_STATE, or android.permission.CHANGE_WIFI_MULTICAST_STATE permission&apos;</div><div class="line">uses-feature:&apos;android.hardware.touchscreen&apos;</div><div class="line">uses-implied-feature:&apos;android.hardware.touchscreen&apos;,&apos;assumed you require a touch screen unless explicitly made optional&apos;</div><div class="line">uses-feature:&apos;android.hardware.screen.portrait&apos;</div><div class="line">uses-implied-feature:&apos;android.hardware.screen.portrait&apos;,&apos;one or more activities have specified a portrait orientation&apos;</div><div class="line">main</div><div class="line">other-activities</div><div class="line">other-receivers</div><div class="line">other-services</div><div class="line">supports-screens: &apos;small&apos; &apos;normal&apos; &apos;large&apos; &apos;xlarge&apos;</div><div class="line">supports-any-density: &apos;true&apos;</div><div class="line">locales: &apos;--_--&apos; &apos;ca&apos; &apos;da&apos; &apos;fa&apos; &apos;ja&apos; &apos;nb&apos; &apos;de&apos; &apos;af&apos; &apos;bg&apos; &apos;th&apos; &apos;fi&apos; &apos;hi&apos; &apos;vi&apos; &apos;sk&apos; &apos;uk&apos; &apos;el&apos; &apos;nl&apos; &apos;pl&apos; &apos;sl&apos; &apos;tl&apos; &apos;am&apos; &apos;in&apos; &apos;ko&apos; &apos;ro&apos; &apos;ar&apos; &apos;fr&apos; &apos;hr&apos; &apos;sr&apos; &apos;tr&apos; &apos;cs&apos; &apos;es&apos; &apos;it&apos; &apos;lt&apos; &apos;pt&apos; &apos;hu&apos; &apos;ru&apos; &apos;zu&apos; &apos;lv&apos; &apos;sv&apos; &apos;iw&apos; &apos;sw&apos; &apos;bs_BA&apos; &apos;fr_CA&apos; &apos;lo_LA&apos; &apos;en_GB&apos; &apos;bn_BD&apos; &apos;et_EE&apos; &apos;ka_GE&apos; &apos;ky_KG&apos; &apos;km_KH&apos; &apos;zh_HK&apos; &apos;si_LK&apos; &apos;mk_MK&apos; &apos;ur_PK&apos; &apos;sq_AL&apos; &apos;hy_AM&apos; &apos;my_MM&apos; &apos;zh_CN&apos; &apos;pa_IN&apos; &apos;ta_IN&apos; &apos;te_IN&apos; &apos;ml_IN&apos; &apos;en_IN&apos; &apos;kn_IN&apos; &apos;mr_IN&apos; &apos;gu_IN&apos; &apos;mn_MN&apos; &apos;ne_NP&apos; &apos;pt_BR&apos; &apos;gl_ES&apos; &apos;eu_ES&apos; &apos;is_IS&apos; &apos;es_US&apos; &apos;pt_PT&apos; &apos;en_AU&apos; &apos;zh_TW&apos; &apos;be_BY&apos; &apos;ms_MY&apos; &apos;az_AZ&apos; &apos;kk_KZ&apos; &apos;uz_UZ&apos;</div><div class="line">densities: &apos;120&apos; &apos;160&apos; &apos;240&apos; &apos;320&apos; &apos;480&apos; &apos;65534&apos; &apos;65535&apos;</div><div class="line">native-code: &apos;armeabi&apos; &apos;armeabi-v7a&apos;</div></pre></td></tr></table></figure>
+<p>获取应用权限说明：<code>aapt dump permissions app-debug.apk</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">package: com.apricotforest.dossier</div><div class="line">permission: com.apricotforest.dossier.permission.MIPUSH_RECEIVE</div><div class="line">uses-permission: com.apricotforest.dossier.permission.MIPUSH_RECEIVE</div><div class="line">uses-permission: android.permission.ACCESS_COARSE_LOCATION</div><div class="line">uses-permission: android.permission.ACCESS_FINE_LOCATION</div><div class="line">uses-permission: android.permission.READ_LOGS</div><div class="line">uses-permission: android.permission.GET_TASKS</div><div class="line">uses-permission: android.permission.DISABLE_KEYGUARD</div><div class="line">uses-permission: com.android.launcher.permission.INSTALL_SHORTCUT</div><div class="line">uses-permission: com.android.launcher.permission.UNINSTALL_SHORTCUT</div><div class="line">uses-permission: android.permission.CAMERA</div><div class="line">uses-permission: android.permission.FLASHLIGHT</div><div class="line">uses-permission: android.permission.RECORD_AUDIO</div><div class="line">uses-permission: android.permission.INTERNET</div><div class="line">uses-permission: android.permission.ACCESS_NETWORK_STATE</div><div class="line">uses-permission: android.permission.READ_PHONE_STATE</div><div class="line">uses-permission: android.permission.MOUNT_UNMOUNT_FILESYSTEMS</div><div class="line">uses-permission: android.permission.WRITE_EXTERNAL_STORAGE</div><div class="line">uses-permission: android.permission.VIBRATE</div><div class="line">uses-permission: android.permission.ACCESS_WIFI_STATE</div><div class="line">uses-permission: android.permission.CALL_PHONE</div><div class="line">uses-permission: android.permission.READ_CONTACTS</div><div class="line">uses-permission: android.permission.RESTART_PACKAGES</div><div class="line">uses-permission: android.permission.CHANGE_WIFI_STATE</div><div class="line">uses-permission: android.permission.CHANGE_CONFIGURATION</div><div class="line">uses-permission: android.permission.RECEIVE_BOOT_COMPLETED</div><div class="line">uses-permission: android.permission.DOWNLOAD_WITHOUT_NOTIFICATION</div><div class="line">uses-permission: android.permission.ACCESS_DOWNLOAD_MANAGER</div><div class="line">uses-permission: android.permission.WRITE_SETTINGS</div><div class="line">uses-permission: android.permission.WAKE_LOCK</div><div class="line">uses-permission: com.android.launcher.permission.READ_SETTINGS</div><div class="line">uses-permission: android.permission.READ_EXTERNAL_STORAGE</div><div class="line">uses-permission: android.permission.BROADCAST_STICKY</div><div class="line">uses-permission: android.permission.RECEIVE_USER_PRESENT</div><div class="line">uses-permission: android.permission.KILL_BACKGROUND_PROCESSES</div><div class="line">uses-permission: android.permission.BLUETOOTH</div><div class="line">uses-permission: android.permission.BATTERY_STATS</div><div class="line">uses-permission: android.permission.SYSTEM_ALERT_WINDOW</div></pre></td></tr></table></figure>
+<p>获取apk的配置列表：<code>aapt dump configurations app-debug.apk</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div></pre></td><td class="code"><pre><div class="line">65534dpi-v21</div><div class="line">nodpi-v4</div><div class="line">v21</div><div class="line">v23</div><div class="line">ldpi-v4</div><div class="line">mdpi-v4</div><div class="line">hdpi-v4</div><div class="line">xhdpi-v4</div><div class="line">xxhdpi-v4</div><div class="line">xxhdpi-v11</div><div class="line">ldrtl-xxhdpi-v17</div><div class="line">sw600dp-v13</div><div class="line">v14</div><div class="line">v17</div><div class="line">ldrtl-v17</div><div class="line">800x480</div><div class="line">800x480-v17</div><div class="line">ca</div><div class="line">da</div><div class="line">fa</div><div class="line">ja</div><div class="line">nb</div><div class="line">de</div><div class="line">af</div><div class="line">bg</div><div class="line">th</div><div class="line">fi</div><div class="line">hi</div><div class="line">vi</div><div class="line">sk</div><div class="line">uk</div><div class="line">el</div><div class="line">nl</div><div class="line">pl</div><div class="line">sl</div><div class="line">tl</div><div class="line">am</div><div class="line">in</div><div class="line">ko</div><div class="line">ro</div><div class="line">ar</div><div class="line">fr</div><div class="line">hr</div><div class="line">sr</div><div class="line">tr</div><div class="line">cs</div><div class="line">es</div><div class="line">it</div><div class="line">lt</div><div class="line">pt</div><div class="line">hu</div><div class="line">ru</div><div class="line">zu</div><div class="line">lv</div><div class="line">sv</div><div class="line">iw</div><div class="line">sw</div><div class="line">bs-BA</div><div class="line">fr-CA</div><div class="line">lo-LA</div><div class="line">en-GB</div><div class="line">bn-BD</div><div class="line">et-EE</div><div class="line">ka-GE</div><div class="line">ky-KG</div><div class="line">km-KH</div><div class="line">zh-HK</div><div class="line">si-LK</div><div class="line">mk-MK</div><div class="line">ur-PK</div><div class="line">sq-AL</div><div class="line">hy-AM</div><div class="line">my-MM</div><div class="line">zh-CN</div><div class="line">pa-IN</div><div class="line">ta-IN</div><div class="line">te-IN</div><div class="line">ml-IN</div><div class="line">en-IN</div><div class="line">kn-IN</div><div class="line">mr-IN</div><div class="line">gu-IN</div><div class="line">mn-MN</div><div class="line">ne-NP</div><div class="line">pt-BR</div><div class="line">gl-ES</div><div class="line">eu-ES</div><div class="line">is-IS</div><div class="line">es-US</div><div class="line">pt-PT</div><div class="line">en-AU</div><div class="line">zh-TW</div><div class="line">be-BY</div><div class="line">ms-MY</div><div class="line">az-AZ</div><div class="line">kk-KZ</div><div class="line">uz-UZ</div><div class="line">large-v4</div><div class="line">xlarge-v4</div><div class="line">w820dp-v13</div><div class="line">h720dp-v13</div><div class="line">v18</div><div class="line">land</div><div class="line">night-v8</div><div class="line">v11</div><div class="line">v12</div><div class="line">v19</div><div class="line">ldltr-v21</div><div class="line">v22</div><div class="line">v13</div><div class="line">sw720dp-v13</div><div class="line">port</div></pre></td></tr></table></figure>
+<p>是不是一目了然，很多时候只需要执行一个命令就能得到想要的东西了，省去了解压或者反编译的繁琐。</p>
+<p>当然，aapt工具能做的还有很多：</p>
+<!--#打印出apk里的资源清单-->
+<p><code>aapt dump resources app-debug.apk</code></p>
+<!--列出zip文件里的文件-->
+<p><code>aapt dump list -v -a  app-debug.apk</code></p>
+<p>不一一列举了。</p>
+<p>enjoy it.</p>
+</li>
+</ul>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/12/31/使用aapt查看apk应用信息/" class="archive-article-date">
+  	<time datetime="2016-12-31T05:13:46.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-12-31</time>
+</a>
+      
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2016/12/12/WebView的内存泄露/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">WebView的内存泄露</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+
+
+
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 fkaking
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/",
+		innerArchive: true
+	}
+</script>
+
+<script src="/./main.js"></script>
+
+
+    
+<div class="tools-col">
+  <ul class="btn-wrap">
+    
+      <li class="chose" data-hook="tools-section-all"><span class="text">全部</span><i class="icon-book"></i></li>
+    
+    
+      <li data-hook="tools-section-tag"><span class="text">标签</span><i class="icon-price-tags"></i></li>
+    
+    
+    
+      <li data-hook="tools-section-me"><span class="text">我</span><i class="icon-smile"></i></li>
+    
+  </ul>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all chose">
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-tag">
+    			<div class="widget tagcloud" id="js-tagcloud">
+    				
+    			</div>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">苟利国家生死已&lt;br&gt;岂因祸福避趋之</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>
