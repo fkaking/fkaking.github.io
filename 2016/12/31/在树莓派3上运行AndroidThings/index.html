@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="http://yoursite.com">
+  <title>在树莓派3上运行AndroidThings | 苟利国家生死已 岂因祸福避趋之</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="AndroidThings是Google最近推出的一款物联网操作系统。它的前身是Brillo。在Brillo的基础上，增加了Android Studio、Android SDK、Google Play 服务、Google 云平台的支持，使得普通的App开发者不需要嵌入式开发的基础，就可以像开发普通应用程序一样开发一个智能设备。
+随着AndroidThings的发布，google同时宣布了三款And">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在树莓派3上运行AndroidThings">
+<meta property="og:url" content="http://yoursite.com/2016/12/31/在树莓派3上运行AndroidThings/index.html">
+<meta property="og:site_name" content="苟利国家生死已 岂因祸福避趋之">
+<meta property="og:description" content="AndroidThings是Google最近推出的一款物联网操作系统。它的前身是Brillo。在Brillo的基础上，增加了Android Studio、Android SDK、Google Play 服务、Google 云平台的支持，使得普通的App开发者不需要嵌入式开发的基础，就可以像开发普通应用程序一样开发一个智能设备。
+随着AndroidThings的发布，google同时宣布了三款And">
+<meta property="og:updated_time" content="2016-12-31T06:35:40.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在树莓派3上运行AndroidThings">
+<meta name="twitter:description" content="AndroidThings是Google最近推出的一款物联网操作系统。它的前身是Brillo。在Brillo的基础上，增加了Android Studio、Android SDK、Google Play 服务、Google 云平台的支持，使得普通的App开发者不需要嵌入式开发的基础，就可以像开发普通应用程序一样开发一个智能设备。
+随着AndroidThings的发布，google同时宣布了三款And">
+  
+    <link rel="alternative" href="/atom.xml" title="苟利国家生死已 岂因祸福避趋之" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="https://avatars2.githubusercontent.com/u/5449200?v=3&s=460">
+  
+  <link rel="stylesheet" href="/main.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img src="null" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">fkaking</a></h1>
+		</hgroup>
+
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+    			<a class="js-smart-menu" data-idx="0" href="javascript:void(0)">所有文章</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="1" href="javascript:void(0)">标签</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="2" href="javascript:void(0)">关于我</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/fkaking" title="github">github</a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-list"></i></div>
+  		<h1 class="header-author js-mobile-header hide">fkaking</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img src="null" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">fkaking</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/fkaking" title="github">github</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap">
+        <article id="run-在树莓派3上运行AndroidThings" class="article article-type-run" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      在树莓派3上运行AndroidThings
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>AndroidThings是Google最近推出的一款物联网操作系统。它的前身是Brillo。在Brillo的基础上，增加了Android Studio、Android SDK、Google Play 服务、Google 云平台的支持，使得普通的App开发者不需要嵌入式开发的基础，就可以像开发普通应用程序一样开发一个智能设备。</p>
+<p>随着AndroidThings的发布，google同时宣布了三款AndroidThings支持的开发板。开发者可以在这些开发板上快速进行产品原型设计和开发，而不需要过多关注内核、固件和开发板本身，从而能更专注地编写Android Things应用程序。</p>
+<p>这三款开发板分别是：</p>
+<ul>
+<li><p><a href="https://software.intel.com/en-us/iot/android-things" target="_blank" rel="external">Intel® Edison</a></p>
+</li>
+<li><p><a href="http://www.nxp.com/AndroidThingsGS" target="_blank" rel="external">NXP Pico i.MX6UL</a></p>
+</li>
+<li><p><a href="https://www.raspberrypi.org/products/raspberry-pi-3-model-b/" target="_blank" rel="external">Raspberry Pi 3</a></p>
+</li>
+</ul>
+<p>以上三款中我选择了树莓派做试验，原因是树莓派在国内的硬件爱好者中已经相当流行，并且有很多相关的论坛可以去参与讨论。最重要的是树莓派相对于其他两款来说最便宜，且在几大电商网站都可以方便的买到。</p>
+<p>树莓派3相比上一代性能增强很多，采用64位四核1.2GHz处理器，搭载1GB LPDDR2内存，虽然配置仅相当于入门级Android手机，但运行Android系统还是无压力的，唯一的缺点是没有硬件加速是硬伤。</p>
+<p>需要准备的东西：</p>
+<ol>
+<li><p>树莓派3开发板</p>
+</li>
+<li><p>一张不小于8G的sd卡</p>
+</li>
+<li><p>一根usb线</p>
+</li>
+<li><p>一根hdmi转接线和一个外接显示器</p>
+</li>
+<li><p>一根网线</p>
+<p>​</p>
+</li>
+</ol>
+<p>首先先下载树莓派版的 <a href="https://dl.google.com/dl/androidthings/rpi3/devpreview/1/androidthings_rpi3_devpreview_1.zip" target="_blank" rel="external">AndroidThings image 开发者预览版</a>。</p>
+<p>之后需要把系统镜像烧录到sd卡上，要注意的是sd卡必须先格式化为FAT32。</p>
+<p>这里以macbook Pro为例，官方有<a href="https://www.raspberrypi.org/documentation/installation/installing-images/linux.md" target="_blank" rel="external">Linux</a>和<a href="https://www.raspberrypi.org/documentation/installation/installing-images/windows.md" target="_blank" rel="external">Windows</a>的教程。</p>
+<ol>
+<li><p>把sd卡插入到电脑，执行<code>diskutil list</code>查看mac上挂在的存储设备。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">/dev/disk0 (internal, physical):</div><div class="line">   #:                       TYPE NAME                    SIZE       IDENTIFIER</div><div class="line">   0:      GUID_partition_scheme                        *251.0 GB   disk0</div><div class="line">   1:                        EFI EFI                     209.7 MB   disk0s1</div><div class="line">   2:          Apple_CoreStorage Macintosh HD            250.1 GB   disk0s2</div><div class="line">   3:                 Apple_Boot Recovery HD             650.0 MB   disk0s3</div><div class="line"></div><div class="line">/dev/disk1 (internal, virtual):</div><div class="line">   #:                       TYPE NAME                    SIZE       IDENTIFIER</div><div class="line">   0:                            Macintosh HD           +249.8 GB   disk1</div><div class="line">                                 Logical Volume on disk0s2</div><div class="line">                                 63A098E0-E7F3-4055-8F92-E8A9F37B78EB</div><div class="line">                                 Unlocked Encrypted</div><div class="line"></div><div class="line">/dev/disk2 (external, physical):</div><div class="line">   #:                       TYPE NAME                    SIZE       IDENTIFIER</div><div class="line">   0:      GUID_partition_scheme                        *15.5 GB    disk2</div><div class="line">   1: 314F99D5-B2BF-4883-8D03-E2F2CE507D6A               67.1 MB    disk2s1</div></pre></td></tr></table></figure>
+<p>在这里/dev/disk2就是我自己的sd卡，但是在你的电脑上可能是/dev/diskn。</p>
+</li>
+<li><p>如果sd卡已经被自动安装，那么需要执行unmount命令来卸载它。详细命令是<code>diskutil unmountdisk /dev/disk2</code>。</p>
+</li>
+<li><p>执行烧录程序：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">dd if=&lt;your_image_path&gt; of=/dev/disk2 bs=2m</div></pre></td></tr></table></figure>
+<p>如果提示没有权限，加上sudo就可以了。</p>
+<p>敲回车开始执行，但是这时候没有任何的进度提示，你耐心等待就好了，大概需要七八分钟的样子，烧录完成后，会提示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">925+0 records in</div><div class="line">925+0 records out</div><div class="line">1939865600 bytes transferred in 576.382578 secs (3365587 bytes/sec)</div></pre></td></tr></table></figure>
+<p>这样就完成烧录了。</p>
+</li>
+<li><p>为树莓派插上usb线供电，把sd卡插入到树莓派的卡槽中，用hdmi线连接板子和显示器，树莓派会自动开机，并且运行AndroidThings系统。</p>
+</li>
+<li><p>连接网络：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">adb shell am startservice \</div><div class="line">   -n com.google.wifisetup/.WifiSetupService \</div><div class="line">   -a WifiSetupService.Connect \</div><div class="line">   -e ssid &lt;Network_SSID&gt; \</div><div class="line">   -e passphrase &lt;Network_Passcode&gt;</div></pre></td></tr></table></figure>
+<p>验证连接成功：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ adb logcat -d | grep Wifi</div><div class="line">...</div><div class="line">V WifiWatcher: Network state changed to CONNECTED</div><div class="line">V WifiWatcher: SSID changed: ...</div><div class="line">I WifiConfigurator: Successfully connected to ...</div></pre></td></tr></table></figure>
+<p>测试连接：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$ adb shell ping 8.8.8.8</div><div class="line">PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.</div><div class="line">64 bytes from 8.8.8.8: icmp_seq=1 ttl=57 time=6.67 ms</div><div class="line">64 bytes from 8.8.8.8: icmp_seq=2 ttl=57 time=55.5 ms</div><div class="line">64 bytes from 8.8.8.8: icmp_seq=3 ttl=57 time=23.0 ms</div><div class="line">64 bytes from 8.8.8.8: icmp_seq=4 ttl=57 time=245 ms</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>没错，你可以像操作一台普通的手机一样通过adb命令来操作树莓派，比如通过Android Studio run一个android程序到树莓派上。</p>
+<p>这里有官方的<a href="https://developer.android.google.cn/things/sdk/samples.html" target="_blank" rel="external">示例代码</a>和github上的一些<a href="https://github.com/androidthings" target="_blank" rel="external">开源项目</a>。</p>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/12/31/在树莓派3上运行AndroidThings/" class="archive-article-date">
+  	<time datetime="2016-12-31T05:43:10.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-12-31</time>
+</a>
+      
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2016/12/31/使用aapt查看apk应用信息/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">使用aapt查看apk应用信息</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+
+
+
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 fkaking
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/",
+		innerArchive: true
+	}
+</script>
+
+<script src="/./main.js"></script>
+
+
+    
+<div class="tools-col">
+  <ul class="btn-wrap">
+    
+      <li class="chose" data-hook="tools-section-all"><span class="text">全部</span><i class="icon-book"></i></li>
+    
+    
+      <li data-hook="tools-section-tag"><span class="text">标签</span><i class="icon-price-tags"></i></li>
+    
+    
+    
+      <li data-hook="tools-section-me"><span class="text">我</span><i class="icon-smile"></i></li>
+    
+  </ul>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all chose">
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-tag">
+    			<div class="widget tagcloud" id="js-tagcloud">
+    				
+    			</div>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">苟利国家生死已&lt;br&gt;岂因祸福避趋之</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>
