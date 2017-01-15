@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="http://yoursite.com">
+  <title>动态切换app图标 | 苟利国家生死已 岂因祸福避趋之</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="有些app在遇到双11、双12之类的节日时，图标会有所变化，但其实并没有更新过版本。这是怎么做到的呢？今天提供一个解决方案：android-alias。
+&amp;lt;android-alias&amp;gt;    是manifest文件中的一个标签，顾名思义，它是某种组件的别名，这个组件就是Activity。那么动态修改图标是怎么实现的呢？
+我们知道，manifest中有两个属性，
+android.inte">
+<meta property="og:type" content="article">
+<meta property="og:title" content="动态切换app图标">
+<meta property="og:url" content="http://yoursite.com/2017/01/15/android-alias/index.html">
+<meta property="og:site_name" content="苟利国家生死已 岂因祸福避趋之">
+<meta property="og:description" content="有些app在遇到双11、双12之类的节日时，图标会有所变化，但其实并没有更新过版本。这是怎么做到的呢？今天提供一个解决方案：android-alias。
+&amp;lt;android-alias&amp;gt;    是manifest文件中的一个标签，顾名思义，它是某种组件的别名，这个组件就是Activity。那么动态修改图标是怎么实现的呢？
+我们知道，manifest中有两个属性，
+android.inte">
+<meta property="og:updated_time" content="2017-01-15T15:24:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="动态切换app图标">
+<meta name="twitter:description" content="有些app在遇到双11、双12之类的节日时，图标会有所变化，但其实并没有更新过版本。这是怎么做到的呢？今天提供一个解决方案：android-alias。
+&amp;lt;android-alias&amp;gt;    是manifest文件中的一个标签，顾名思义，它是某种组件的别名，这个组件就是Activity。那么动态修改图标是怎么实现的呢？
+我们知道，manifest中有两个属性，
+android.inte">
+  
+    <link rel="alternative" href="/atom.xml" title="苟利国家生死已 岂因祸福避趋之" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="https://avatars2.githubusercontent.com/u/5449200?v=3&s=460">
+  
+  <link rel="stylesheet" href="/main.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img src="null" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">fkaking</a></h1>
+		</hgroup>
+
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+    			<a class="js-smart-menu" data-idx="0" href="javascript:void(0)">所有文章</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="1" href="javascript:void(0)">标签</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="2" href="javascript:void(0)">关于我</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/fkaking" title="github">github</a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-list"></i></div>
+  		<h1 class="header-author js-mobile-header hide">fkaking</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img src="null" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">fkaking</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/fkaking" title="github">github</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap">
+        <article id="post-android-alias" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      动态切换app图标
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>有些app在遇到双11、双12之类的节日时，图标会有所变化，但其实并没有更新过版本。这是怎么做到的呢？今天提供一个解决方案：android-alias。</p>
+<p><code>&lt;android-alias&gt;</code>    是manifest文件中的一个标签，顾名思义，它是某种组件的别名，这个组件就是Activity。那么动态修改图标是怎么实现的呢？</p>
+<p>我们知道，manifest中有两个属性，</p>
+<p><code>android.intent.action.MAIN</code>—— 决定应用程序最先启动的Activity<br><code>android.intent.category.LAUNCHER</code> —— 决定应用程序是否显示在程序列表里</p>
+<p>比如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;activity android:name=&quot;.MainActivity&quot;&gt;</div><div class="line">    &lt;intent-filter&gt;</div><div class="line">        &lt;action android:name=&quot;android.intent.action.MAIN&quot;/&gt;</div><div class="line">        &lt;category android:name=&quot;android.intent.category.LAUNCHER&quot;/&gt;</div><div class="line">    &lt;/intent-filter&gt;</div><div class="line">&lt;/activity&gt;</div></pre></td></tr></table></figure>
+<p>这样，应用在安装以后就会在launcher里显示图标，点击图标会首先跳转到MainActivity。</p>
+<p>到了这里，alias开始发挥作用了。</p>
+<p>我们在上面的组件后面再添加这样一个组件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&lt;activity-alias</div><div class="line">    android:name=&quot;.Test11&quot;</div><div class="line">    android:enabled=&quot;false&quot;</div><div class="line">    android:icon=&quot;@drawable/s11&quot;</div><div class="line">    android:label=&quot;双11&quot;</div><div class="line">    android:targetActivity=&quot;.MainActivity&quot;&gt;</div><div class="line">    &lt;intent-filter&gt;</div><div class="line">        &lt;action android:name=&quot;android.intent.action.MAIN&quot;/&gt;</div><div class="line">        &lt;category android:name=&quot;android.intent.category.LAUNCHER&quot;/&gt;</div><div class="line">    &lt;/intent-filter&gt;</div><div class="line">&lt;/activity-alias&gt;</div></pre></td></tr></table></figure>
+<p>这里我们为MainActivity设置了一个alias，它的名字叫Test11，然后它最重要的属性有两个，一个是icon，代表在桌面上显示的图标，一个是targetActivity，表示它实际上指向的activity，也就是点击后实际跳转的activity。</p>
+<p>alias标签可以设置这些属性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;activity-alias android:enabled=[&quot;true&quot; | &quot;false&quot;]</div><div class="line">                android:exported=[&quot;true&quot; | &quot;false&quot;]</div><div class="line">                android:icon=&quot;drawable resource&quot;</div><div class="line">                android:label=&quot;string resource&quot;</div><div class="line">                android:name=&quot;string&quot;</div><div class="line">                android:permission=&quot;string&quot;</div><div class="line">                android:targetActivity=&quot;string&quot; &gt;</div><div class="line">    . . .</div><div class="line">&lt;/activity-alias&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>android:enabled</strong> 属性，布尔类型，是否开启别名设置，默认值为 true；</li>
+<li><strong>android:exported</strong> 属性，布尔类型，是否支持其他应用通过这个别名访问目标 Activity，默认值为 true；</li>
+<li><strong>android:icon</strong> 和 <strong>label</strong> 属性：类似 <code>activity</code> 标签，表示目标 Activity 的显示图标和标签；</li>
+<li><strong>android:name</strong> 属性：Activity 别名，在 <code>activity</code> 标签中， name 属性必须与对应 Activity 文件的名字保持一致，而这里的别名可任意设置，保证唯一性即可；</li>
+<li><strong>android:permission</strong> 属性：权限设置，对别名的使用加以限制，详细属性值参考开发者官网对 <a href="https://developer.android.com/guide/topics/manifest/manifest-intro.html#perms" target="_blank" rel="external">权限部分</a> 的说明；</li>
+<li><strong>android:targetActivity</strong> 属性：指定别名能够启动的目标 Activity，注意，属性值一定要对应到 <code>activity</code> 标签中的 name 属性，并且该 <code>activity</code> 标签一定要位于 <code>activity-alias</code> 标签前面；</li>
+</ul>
+<p>这样设置以后，运行应用，会发现桌面上产生了两个图标，怎么办？只要把不用的图标先禁用掉，等到服务端发来消息说要换图标的时候再动态替换就行。</p>
+<p>这里要用到另外一个类：<code>PackageManager</code>,它可以管理应用里所有的组件。</p>
+<p>定义两个方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">private void enableComponent(ComponentName componentName) &#123;</div><div class="line">    packageManager.setComponentEnabledSetting(componentName,</div><div class="line">            PackageManager.COMPONENT_ENABLED_STATE_ENABLED,</div><div class="line">            PackageManager.DONT_KILL_APP);</div><div class="line">&#125;</div><div class="line"></div><div class="line">private void disableComponent(ComponentName componentName) &#123;</div><div class="line">    packageManager.setComponentEnabledSetting(componentName,</div><div class="line">            PackageManager.COMPONENT_ENABLED_STATE_DISABLED,</div><div class="line">            PackageManager.DONT_KILL_APP);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>根据<code>PackageManager.COMPONENT_ENABLED_STATE_ENABLED</code>和<code>PackageManager.COMPONENT_ENABLED_STATE_DISABLED</code>以及componentName，就可以控制某个组件是否可用了。</p>
+<p>已经很明了了，我们现在可以根据服务器的指令动态修改app的icon。流程如下：</p>
+<ol>
+<li>应用里设置不同图标对应的alias</li>
+<li>禁用除默认图标以外的其他alias</li>
+<li>在程序中设置接受指令的操作，通过PackageManager管理Component，动态切换图标。</li>
+</ol>
+<p>简单的代码实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">public class MainActivity extends AppCompatActivity &#123;</div><div class="line">    private ComponentName default;</div><div class="line">    private ComponentName double11;</div><div class="line">    private ComponentName double12;</div><div class="line">    private PackageManager packageManager;</div><div class="line">    @Override</div><div class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">        super.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.activity_main);</div><div class="line">        default = getComponentName();</div><div class="line">        double11 = new ComponentName(getBaseContext(),&quot;com.example.changeicon.Test11&quot;);</div><div class="line">        double12 = new ComponentName(getBaseContext(),&quot;com.example.changeicon.Test12&quot;);</div><div class="line">        packageManager = getApplicationContext().getPackageManager();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void changeIcon11(View view) &#123;</div><div class="line">        disableComponent(mDefault);</div><div class="line">        disableComponent(mDouble12);</div><div class="line">        enableComponent(mDouble11);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void changeIcon12(View view) &#123;</div><div class="line">        disableComponent(mDefault);</div><div class="line">        disableComponent(mDouble11);</div><div class="line">        enableComponent(mDouble12);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private void enableComponent(ComponentName componentName) &#123;    	      								packageManager.setComponentEnabledSetting(componentName,</div><div class="line">    		PackageManager.COMPONENT_ENABLED_STATE_ENABLED,</div><div class="line">    		PackageManager.DONT_KILL_APP);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private void disableComponent(ComponentName componentName) &#123;</div><div class="line">        packageManager.setComponentEnabledSetting(componentName,</div><div class="line">                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,</div><div class="line">                PackageManager.DONT_KILL_APP);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>修改之后，需要稍等片刻才能看到变化。如果想在修改完成之后立即看到变化，只能通过 Intent 重启 Launcher 应用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Intent intent = new Intent(Intent.ACTION_MAIN);</div><div class="line">intent.addCategory(Intent.CATEGORY_HOME);</div><div class="line">intent.addCategory(Intent.CATEGORY_DEFAULT);</div><div class="line">List&lt;ResolveInfo&gt; resolves = pm.queryIntentActivities(intent, 0);</div><div class="line">for (ResolveInfo res : resolves) &#123;</div><div class="line">    if (res.activityInfo != null) &#123;</div><div class="line">        ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);</div><div class="line">        am.killBackgroundProcesses(res.activityInfo.packageName);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2017/01/15/android-alias/" class="archive-article-date">
+  	<time datetime="2017-01-15T14:24:14.000Z" itemprop="datePublished"><i class="icon-clock"></i>2017-01-15</time>
+</a>
+      
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2016/12/31/在树莓派3上运行AndroidThings/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">在树莓派3上运行AndroidThings</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+
+
+
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 fkaking
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/",
+		innerArchive: true
+	}
+</script>
+
+<script src="/./main.js"></script>
+
+
+    
+<div class="tools-col">
+  <ul class="btn-wrap">
+    
+      <li class="chose" data-hook="tools-section-all"><span class="text">全部</span><i class="icon-book"></i></li>
+    
+    
+      <li data-hook="tools-section-tag"><span class="text">标签</span><i class="icon-price-tags"></i></li>
+    
+    
+    
+      <li data-hook="tools-section-me"><span class="text">我</span><i class="icon-smile"></i></li>
+    
+  </ul>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all chose">
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-tag">
+    			<div class="widget tagcloud" id="js-tagcloud">
+    				
+    			</div>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">苟利国家生死已&lt;br&gt;岂因祸福避趋之</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>
