@@ -6,14 +6,27 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2017 | 苟利国家生死已 岂因祸福避趋之</title>
+  <title>苟利国家生死已 岂因祸福避趋之</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
+  <meta name="description" content="Android NDK中armeabi和armeabi v7 ，armeabi64-v8a的区别Android开发中如果涉及到NDK相关的开发，势必要引入.so文件。
+ABI:指应用基于哪种指令集来进行编译，ABI以前总共有四种，分别是armeabi、armeabi-v7a、mips、x86，它们都是表示cpu的类型，现在又有了arm64-v8a。
+以下讨论不包括mips和x86。
+先说以前对于s">
+<meta property="og:type" content="article">
 <meta property="og:title" content="苟利国家生死已 岂因祸福避趋之">
-<meta property="og:url" content="http://yoursite.com/archives/2017/index.html">
+<meta property="og:url" content="http://yoursite.com/2017/03/08/Android-NDK中armeabi和armeabi-v7，armeabi64-v8a的区别/index.html">
 <meta property="og:site_name" content="苟利国家生死已 岂因祸福避趋之">
+<meta property="og:description" content="Android NDK中armeabi和armeabi v7 ，armeabi64-v8a的区别Android开发中如果涉及到NDK相关的开发，势必要引入.so文件。
+ABI:指应用基于哪种指令集来进行编译，ABI以前总共有四种，分别是armeabi、armeabi-v7a、mips、x86，它们都是表示cpu的类型，现在又有了arm64-v8a。
+以下讨论不包括mips和x86。
+先说以前对于s">
+<meta property="og:updated_time" content="2017-03-08T10:31:08.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="苟利国家生死已 岂因祸福避趋之">
+<meta name="twitter:description" content="Android NDK中armeabi和armeabi v7 ，armeabi64-v8a的区别Android开发中如果涉及到NDK相关的开发，势必要引入.so文件。
+ABI:指应用基于哪种指令集来进行编译，ABI以前总共有四种，分别是armeabi、armeabi-v7a、mips、x86，它们都是表示cpu的类型，现在又有了arm64-v8a。
+以下讨论不包括mips和x86。
+先说以前对于s">
   
     <link rel="alternative" href="/atom.xml" title="苟利国家生死已 岂因祸福避趋之" type="application/atom+xml">
   
@@ -116,70 +129,93 @@
 </nav>
 
       <div class="body-wrap">
-        
-  
-  
+        <article id="post-Android-NDK中armeabi和armeabi-v7，armeabi64-v8a的区别" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
     
     
+    <div class="article-entry" itemprop="articleBody">
       
+        <h1 id="Android-NDK中armeabi和armeabi-v7-，armeabi64-v8a的区别"><a href="#Android-NDK中armeabi和armeabi-v7-，armeabi64-v8a的区别" class="headerlink" title="Android NDK中armeabi和armeabi v7 ，armeabi64-v8a的区别"></a>Android NDK中armeabi和armeabi v7 ，armeabi64-v8a的区别</h1><p>Android开发中如果涉及到NDK相关的开发，势必要引入.so文件。</p>
+<p>ABI:指应用基于哪种指令集来进行编译，ABI以前总共有四种，分别是armeabi、armeabi-v7a、mips、x86，它们都是表示cpu的类型，现在又有了arm64-v8a。</p>
+<p><em>以下讨论不包括mips和x86。</em></p>
+<p>先说以前对于so的平台兼容处理方式吧。</p>
+<p>armeabi就是针对普通的或旧的arm cpu，armeabi-v7a是针对有浮点运算或高级扩展功能的arm cpu。</p>
+<p>armeabi-v7a可以兼容armeabi。也就是说，支持armeabi-v7a的设备同时也可以支持armeabi。但是反过来则不然。</p>
+<p>以前安卓都是32位系统，运行的进程都是32位，理论上armeabi的so可以被全平台兼容，所以，理论上我们可以只提供一个armeabi的so就能在所有cpu平台运行了。也就是说如果我们引入了A和B两个库，其中A提供了全平台的armeabi、armeabi-v7a，而B只有一个armeabi的so，那么我们可以把B的这个so复制到另一个文件夹就可以被兼容了。</p>
+<p>同时因为现在armeabi的设备比armeabi-v7的要少很多，所以有些应用直接提供了armeabi-v7的so。</p>
+<p>现在有了arm64-v8a的CPU以及安卓64位系统，上面的方法就有点例外了。</p>
+<p>arm64-v8a是可以向下兼容的，其下有armeabi-v7a，armeabi<br>armeabi-v7a向下兼容armeabi</p>
+<p>兼容得不够智能：<br>对于一个cpu是arm64-v8a架构的手机，它运行app时，进入jnilibs去读取库文件时，先看有没有arm64-v8a文件夹：</p>
+<blockquote>
+<p>如果没有该文件夹，去找armeabi-v7a文件夹，如果没有，再去找armeabi文件夹，如果连这个文件夹也没有，就抛出异常<br>如果有arm64-v8a文件夹，那么就去找特定名称的.so文件，<strong>注意：如果没有找到，不会再往下（armeabi-v7a文件夹）找了，而是直接抛出异常</strong></p>
+</blockquote>
+<p>在安卓64位系统上，同时运行着32位和64位的进程（这点和Windows很像，在64位Windows上也是能同时运行32位和63位的进程的）。</p>
+<p>以下讨论是基于64位安卓系统上：</p>
+<ol>
+<li>如果一个纯粹的java写的应用，没有使用任何的so，那么默认就应该以64位模式来运行；</li>
+<li>如果一个应用中只提供了32位的so，那么这个应用会运行在32位模式，我们之前的拷贝so到其他文件夹的方式依然是可行的。</li>
+<li>如果一个应用引入了两个库分别是A和B，其中A提供了armeabi，armeabi-v7，arm64-v8a，x86四个so，而B只提供了armeabi一个so，这样的话，因为应用启动时会检测到arm64-v8a的存在，所以就会以64位模式来运行了，这时需要用到的so必须为64位的，就不能使用armeabi的so来兼容了，也就是说一个进程中一旦使用了64位的so，那么就不能使用32位的so了，这点也和Windows很像。要解决这个问题，要么就是找到B的其他平台的so，要么就是去掉A的64位so，以32位模式来运行。</li>
+</ol>
+<p>总结:</p>
+<p>1.如果为了性能考虑，最好是armabi和armabiv7的so库都引入，但是这样可能会造成apk的size比较大；</p>
+<p>2.如果为了缩小apk size，可以只放armabi，但是会损害应用性能</p>
+<p>3.基于国内目前64位安卓系统普及率较低，可以不考虑armeabi64-v8a</p>
+
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/03/08/Android-NDK中armeabi和armeabi-v7，armeabi64-v8a的区别/" class="archive-article-date">
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2017/03/08/Android-NDK中armeabi和armeabi-v7，armeabi64-v8a的区别/" class="archive-article-date">
   	<time datetime="2017-03-08T10:29:48.000Z" itemprop="datePublished"><i class="icon-clock"></i>2017-03-08</time>
 </a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+      
+      
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/01/15/android-alias/" class="archive-article-date">
-  	<time datetime="2017-01-15T14:24:14.000Z" itemprop="datePublished"><i class="icon-clock"></i>2017-01-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/01/15/android-alias/">动态切换app图标</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-          
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2017/01/15/android-alias/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">动态切换app图标</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
 
-    
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+
 
 
       </div>
@@ -202,8 +238,8 @@
 		mathjax: false,
 		animate: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
