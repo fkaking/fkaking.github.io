@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="http://yoursite.com">
+  <title>图片加载利器——Fresco | 苟利国家生死已 岂因祸福避趋之</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="众所周知，在移动设备上运行的应用，其运行环境提供的运行空间和资源有限，因此对应用性能有极高的要求，像图片这样消耗内存和cpu资源的大户，一直是移动开发领域中的一个热点话题。幸运的是已经有很多无私奉献的人为我们提供了现成的图片框架。比如Universal Image Loader，Picasso,Glide，Volley等。以及今天要介绍的——Fresco。Fresco是Facebook开源的一款图">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图片加载利器——Fresco">
+<meta property="og:url" content="http://yoursite.com/2017/04/24/图片加载利器——Fresco/index.html">
+<meta property="og:site_name" content="苟利国家生死已 岂因祸福避趋之">
+<meta property="og:description" content="众所周知，在移动设备上运行的应用，其运行环境提供的运行空间和资源有限，因此对应用性能有极高的要求，像图片这样消耗内存和cpu资源的大户，一直是移动开发领域中的一个热点话题。幸运的是已经有很多无私奉献的人为我们提供了现成的图片框架。比如Universal Image Loader，Picasso,Glide，Volley等。以及今天要介绍的——Fresco。Fresco是Facebook开源的一款图">
+<meta property="og:image" content="http://fresco-cn.org/static/imagepipeline.png">
+<meta property="og:updated_time" content="2017-04-24T09:16:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="图片加载利器——Fresco">
+<meta name="twitter:description" content="众所周知，在移动设备上运行的应用，其运行环境提供的运行空间和资源有限，因此对应用性能有极高的要求，像图片这样消耗内存和cpu资源的大户，一直是移动开发领域中的一个热点话题。幸运的是已经有很多无私奉献的人为我们提供了现成的图片框架。比如Universal Image Loader，Picasso,Glide，Volley等。以及今天要介绍的——Fresco。Fresco是Facebook开源的一款图">
+<meta name="twitter:image" content="http://fresco-cn.org/static/imagepipeline.png">
+  
+    <link rel="alternative" href="/atom.xml" title="苟利国家生死已 岂因祸福避趋之" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="https://avatars2.githubusercontent.com/u/5449200?v=3&s=460">
+  
+  <link rel="stylesheet" href="/main.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img src="null" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">fkaking</a></h1>
+		</hgroup>
+
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+    			<a class="js-smart-menu" data-idx="0" href="javascript:void(0)">所有文章</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="1" href="javascript:void(0)">标签</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="2" href="javascript:void(0)">关于我</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/fkaking" title="github">github</a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-list"></i></div>
+  		<h1 class="header-author js-mobile-header hide">fkaking</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img src="null" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">fkaking</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/fkaking" title="github">github</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap">
+        <article id="post-图片加载利器——Fresco" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      图片加载利器——Fresco
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>众所周知，在移动设备上运行的应用，其运行环境提供的运行空间和资源有限，因此对应用性能有极高的要求，像图片这样消耗内存和cpu资源的大户，一直是移动开发领域中的一个热点话题。幸运的是已经有很多无私奉献的人为我们提供了现成的图片框架。比如Universal Image Loader，Picasso,Glide，Volley等。以及今天要介绍的——Fresco。Fresco是Facebook开源的一款图片显示框架。</p>
+<h2 id="高效的内存管理"><a href="#高效的内存管理" class="headerlink" title="高效的内存管理"></a>高效的内存管理</h2><p>首先，Android上运行的App的java堆内存都是被严格限制的。每个对象都是使用new在堆内存中实例化。内存有垃圾回收机制，所以当App不再使用内存时，系统会在合适的时机自动把这块内存回收。<br>但是，内存回收的过程，不仅对垃圾进行了回收，还把正在运行的Android程序也终止了。这是用户在使用时感觉卡顿或假死的最重要原因。相比之下，Native对是由C++程序的new分配的。在Native堆里有更多可用内存。App只被设备的物理内存所限制，而不会被垃圾回收机制所影响。但是C++程序员必须自己回收所分配的每一块内存，否则会导致内存泄露，最终导致程序崩溃。<br>在Android里，有另外一种内存区域，叫做Ashmem（Anonymous Shared Memory），既匿名共享内存，具体可以参考老罗的<a href="http://blog.csdn.net/luoshengyang/article/details/6651971" target="_blank" rel="external">这篇文章</a>。<br>它操作起来更像Native堆，但是也有额外的系统调用。Android在操作Ashmem堆时，会把该堆中存有数据的内存区域从Ashmem对中抽取出来，而不是把它释放掉，这是一种弱内存释放模式，被抽取出来的这部分内存只有当系统真正需要更多的内存时才会被释放，当Android把被抽取出来的这部分内存放回Ashmem对，只要被抽取的内存空间没有被释放，之前的数据就会恢复到相应的位置。<br>Fresco在缓存bitmap对象时，在5.0以下的系统，会把缓存放在Ashmem中，而5.0及其以上的系统，相比之下起内存管理有了很大的改进，所以bitmap的缓存是位于java堆内存中。当应用在后台运行时，该内存会被清空。<br>相比于其他的框架，fresco把缓存分成三块：1.bitmap缓存；2.未解码图片的内存缓存。从该缓存渠道的图片在使用之前，需要先进行解码。3.磁盘缓存。磁盘缓存存储的也是未解码的原始压缩格式的图片，使用前同样要经过解码等处理。<br>显示一张图片的流程如下：<br><img src="http://fresco-cn.org/static/imagepipeline.png" alt="图片显示流程"></p>
+<h2 id="拥抱stream"><a href="#拥抱stream" class="headerlink" title="拥抱stream"></a>拥抱stream</h2><p>web上的渐进式JPEG图片已经成为一种使用习惯，在打开文件过程中，会先显示整个图片的模糊轮廓，让用户知道正在加载的图片大概是什么。Fresco把这个特效带到了Android上，它定义了一个类似于java中Future的DataSource。不同之处在于Future返回的是一个结果，而DataSource返回的一个完整而连续的显示结果，这样就实现了“渐进”的效果。</p>
+<h2 id="动画完全支持"><a href="#动画完全支持" class="headerlink" title="动画完全支持"></a>动画完全支持</h2><p>动画大多以Gif和WebP的格式存在，如果支持这些格式，就需要面临一个新的挑战。因为每一个动画都由不知一张图片组成，你需要解码每一张图片，存储在内存里，然后显示出来，对于较大的动画，把每一帧放在内存是不可行的。<br>Fresco建立了AnimatedDrawable，一个强大的可以呈现动画的drawable，同时支持Gif和WebP格式。AndroidmatedDrawable实现了标准的Android Animatable接口，所以调用者可以随意启动和停止动画。</p>
+<h2 id="忘记ImageView"><a href="#忘记ImageView" class="headerlink" title="忘记ImageView"></a>忘记ImageView</h2><p>显示图片一般使用ImageView，当图片准备好显示时，使用ImageView代替占位图。然而，改变View会让Android强制刷新整个布局，当用户滑动时，这个效果比较尴尬。明智的做法是使用Drawables，他可以迅速的被替换。<br>Fresco创建了Drawee。这是一个类似于MVC架构的图片显示框架，在Fresco中有个专门的名称——DraweeHierarchy。他被实现为Drawables的一个层，对于底层图片而言，每个层都有特定的功能——成像、渐变或者缩放。<br>DraweeControllers通过管道的方式连接到图像上。他们控制着DraweeHierarchy的实际操作，比如站位图片，出错时的图片，成功时的图片。DeaweeView会监听Android的View不再显示在屏幕上的系统事件。当图片离开屏幕时，DraweeView可以告诉DraweeController关闭图片资源。这可以避免内存泄露。此外，如果它已经不在屏幕范围内的话，控制器会告诉图片管道取消网络请求，这在listview中显示图片的情况中是一个及其明显的优化。</p>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2017/04/24/图片加载利器——Fresco/" class="archive-article-date">
+  	<time datetime="2017-04-24T09:15:54.000Z" itemprop="datePublished"><i class="icon-clock"></i>2017-04-24</time>
+</a>
+      
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2017/04/24/使用TouchDelegate扩大View的触控范围/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          使用TouchDelegate扩大View的触控范围
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/04/24/Android-NDK中armeabi和armeabi-v7-，armeabi64-v8a的区别/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Android NDK中armeabi和armeabi v7 ，armeabi64-v8a的区别</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+
+
+
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 fkaking
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/",
+		innerArchive: true
+	}
+</script>
+
+<script src="/./main.js"></script>
+
+
+    
+<div class="tools-col">
+  <ul class="btn-wrap">
+    
+      <li class="chose" data-hook="tools-section-all"><span class="text">全部</span><i class="icon-book"></i></li>
+    
+    
+      <li data-hook="tools-section-tag"><span class="text">标签</span><i class="icon-price-tags"></i></li>
+    
+    
+    
+      <li data-hook="tools-section-me"><span class="text">我</span><i class="icon-smile"></i></li>
+    
+  </ul>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all chose">
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-tag">
+    			<div class="widget tagcloud" id="js-tagcloud">
+    				
+    			</div>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">苟利国家生死已&lt;br&gt;岂因祸福避趋之</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>

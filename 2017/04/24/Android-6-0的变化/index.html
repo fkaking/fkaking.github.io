@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="http://yoursite.com">
+  <title>Android 6.0的变化 | 苟利国家生死已 岂因祸福避趋之</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="上周把病历夹Android版本的compileSdkVersion由21升级到了23，也就是Android6.0。说来惭愧，Android6.0已经发布近一年，直到现在才拥抱了新变化。。。
+下面简单总结一下升级后遇到的问题。首先修改build.gradle的配置以后，编译了一下工程，报了上百个错误，在若干只羊驼从脑海里飞奔而过以后，开始一个一个的检查，大概看了一下，问题实际上就那么几个，主要是用到">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 6.0的变化">
+<meta property="og:url" content="http://yoursite.com/2017/04/24/Android-6-0的变化/index.html">
+<meta property="og:site_name" content="苟利国家生死已 岂因祸福避趋之">
+<meta property="og:description" content="上周把病历夹Android版本的compileSdkVersion由21升级到了23，也就是Android6.0。说来惭愧，Android6.0已经发布近一年，直到现在才拥抱了新变化。。。
+下面简单总结一下升级后遇到的问题。首先修改build.gradle的配置以后，编译了一下工程，报了上百个错误，在若干只羊驼从脑海里飞奔而过以后，开始一个一个的检查，大概看了一下，问题实际上就那么几个，主要是用到">
+<meta property="og:updated_time" content="2017-04-24T09:10:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 6.0的变化">
+<meta name="twitter:description" content="上周把病历夹Android版本的compileSdkVersion由21升级到了23，也就是Android6.0。说来惭愧，Android6.0已经发布近一年，直到现在才拥抱了新变化。。。
+下面简单总结一下升级后遇到的问题。首先修改build.gradle的配置以后，编译了一下工程，报了上百个错误，在若干只羊驼从脑海里飞奔而过以后，开始一个一个的检查，大概看了一下，问题实际上就那么几个，主要是用到">
+  
+    <link rel="alternative" href="/atom.xml" title="苟利国家生死已 岂因祸福避趋之" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="https://avatars2.githubusercontent.com/u/5449200?v=3&s=460">
+  
+  <link rel="stylesheet" href="/main.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img src="null" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">fkaking</a></h1>
+		</hgroup>
+
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+    			<a class="js-smart-menu" data-idx="0" href="javascript:void(0)">所有文章</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="1" href="javascript:void(0)">标签</a>
+    			
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="2" href="javascript:void(0)">关于我</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/fkaking" title="github">github</a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-list"></i></div>
+  		<h1 class="header-author js-mobile-header hide">fkaking</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img src="null" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">fkaking</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/fkaking" title="github">github</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap">
+        <article id="post-Android-6-0的变化" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android 6.0的变化
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre><code>上周把病历夹Android版本的compileSdkVersion由21升级到了23，也就是Android6.0。说来惭愧，Android6.0已经发布近一年，直到现在才拥抱了新变化。。。
+</code></pre><p>下面简单总结一下升级后遇到的问题。<br>首先修改build.gradle的配置以后，编译了一下工程，报了上百个错误，在若干只羊驼从脑海里飞奔而过以后，开始一个一个的检查，大概看了一下，问题实际上就那么几个，主要是用到的地方太多。</p>
+<p>1.移除Apache Http Client<br>    6.0发布版移除了对Apache Http Client的支持，官方推荐使用HttpUrlConnection类来替换（targetSdkVersion&gt;9）,因为后者使用了对用户透明的压缩和对响应的缓存，最大限度的减少了电量的消耗。如果要继续使用Apache Http Client的相关api，只需要在gradle中声明编译期依赖：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">    useLibrary &apos;org.apache.http.legacy&apos;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>2.通知<br>    新版本移除了Notification.setLatestEventInfo()方法，使用Notification.Builder 类来代替构造方法。</p>
+<p>3.FloatMath类<br>    移除了FloatMath类，在一些自定义view中有使用，直接用Math类替换即可，官方的说法是在运行JIT编译器的安卓设备上Math类的效率要远高于FloatMath类。</p>
+<p><strong>其他的重大变化：</strong></p>
+<p>1.权限机制<br>    可以说是Android6.0最大的亮点。也呼应了Android对于用户安全的重视。Android6.0引入了全新的权限机制，用户可以在运行时直接管理某个应用程序的权限。也就是应用程序要在使用到某个权限时，事先检查是否获取到了这个权限，通过checkSelfPermission()方法,通过requestPermissions()方法来获取权限.</p>
+<p>2.Doze和应用挂起<br>    为空闲的设备和应用程序引入了电源节能的优化。<br>    如果用户拔掉了设备的电源线，并且设备是静止的，当屏幕关闭一段时间以后，系统将进入Doze模式。这时系统进入休眠状态，这种模式下设备会周期性的恢复某些normal的操作，以便应用程序的同步，同时系统可以执行一些耗时的操作。<br>    当用户一段时间内没有使用某个应用程序，系统将把这个应用视为挂起状态，将禁止应用访问网络，并停止该应用的操作。</p>
+<p>3.WIFI和网络变更<br>    应用程序只能修改或者删除由自己创建的WifiConfiguration对象，由用户或者其他应用程序创建的WifiConfiguration对象你是没有权利修改删除的。在之前的版本中，如果应用程序使用 enableNetwork() ，并设置 disableAllOthers=true来强制设备连接到指定的 Wi-Fi 网络，设备将和其他网络断开。这个版本中，这些设备将不再和其他网络断开。如果应用程序的 targetSdkVersion 是 20 或者更低，则会连接被选中的 Wi-Fi 网络。如果应用程序的 targetSdkVersion 是 21 或者更高，使用多网络 API (如 openConnection()， bindSocket() 及新的 bindProcessToNetwork() 方法)来确保它的网络通信是发给被选中的网络。</p>
+<p>4.摄像头服务变更<br>    访问摄像头服务的共享资源时，优先级发生了变更。不再是“先到先得”，而是具有高优先级的进城优先获得。</p>
+<p>5.USB连接<br>    通过 USB 端口的设备连接默认为充电模式。想要通过 USB 连接来访问设备和它的内容，用户需要为这些交互提供明确的授权。如果你的应用程序支持用户通过 USB 端口与设备交互，需要确保这些交互被明确启用。</p>
+<p>详情请看<a href="https://developer.android.com/intl/zh-cn/about/versions/marshmallow/android-6.0-changes.html#behavior-apache-http-client" target="_blank" rel="external">Android 6.0 Changes</a></p>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2017/04/24/Android-6-0的变化/" class="archive-article-date">
+  	<time datetime="2017-04-24T09:06:56.000Z" itemprop="datePublished"><i class="icon-clock"></i>2017-04-24</time>
+</a>
+      
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2017/04/24/Android-NDK中armeabi和armeabi-v7-，armeabi64-v8a的区别/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Android NDK中armeabi和armeabi v7 ，armeabi64-v8a的区别
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/04/21/ButterKnife-源码分析/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">ButterKnife 源码分析</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+
+
+
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 fkaking
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/",
+		innerArchive: true
+	}
+</script>
+
+<script src="/./main.js"></script>
+
+
+    
+<div class="tools-col">
+  <ul class="btn-wrap">
+    
+      <li class="chose" data-hook="tools-section-all"><span class="text">全部</span><i class="icon-book"></i></li>
+    
+    
+      <li data-hook="tools-section-tag"><span class="text">标签</span><i class="icon-price-tags"></i></li>
+    
+    
+    
+      <li data-hook="tools-section-me"><span class="text">我</span><i class="icon-smile"></i></li>
+    
+  </ul>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all chose">
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-tag">
+    			<div class="widget tagcloud" id="js-tagcloud">
+    				
+    			</div>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">苟利国家生死已&lt;br&gt;岂因祸福避趋之</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>

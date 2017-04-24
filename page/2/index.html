@@ -118,6 +118,280 @@
       <div class="body-wrap">
         
   
+    <article id="post-Dagger2之Scope、SubComponent" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/11/Dagger2之Scope、SubComponent/">Dagger2（2）Scope、SubComponent</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Dagger2学习（二）–Scope、SubCompontent</p>
+<p>除了Module、Provides、Compontent、Qualifier以外，Dagger2还有两个重要的概念：Scope和SubCompontent。</p>
+<p>##一、Scope<br>一般在Module和Compontent前面都会加上@Singleton，这表示Dagger里的Scope的概念。这个概念主要是为了解决对象生命周期的问题。联想一下android开发的日常，activity的一堆生命周期方法，各种application级别的单例，用户登录状态等等，Scope跟这些概念不谋而合。<br>@singleton是Dagger框架定义的唯一的Scope，我们可以定义自己的Scope。<br>以下是@singleton的源码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@Scope</div><div class="line">@Documented</div><div class="line">@Retention(RUNTIME)</div><div class="line">public @interface Singleton&#123;&#125;</div></pre></td></tr></table></figure>
+<p>我们可以定义自己的Scope，比如定义一个跟Activity生命周期相同的Scope：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@Scope</div><div class="line">@Documented</div><div class="line">@Retention(RUNTIME)</div><div class="line">public @interface PerActivity&#123;&#125;</div></pre></td></tr></table></figure>
+<p>@Scope：注明是Scope<br>@Documented：标记在文档<br>@Retention（RUNTIME）：指定注解的解析时机，这里是运行时级别<br>那么为什么要自己定义Scope呢？是不是定义一个PerActivity的scope就可以完美实现和activity一样的生命周期了？当然没有那么神奇。实际上，并不是只有@Singleton注解的compontent产生的依赖才是单例，只要使用了scope注解，就都是单例的，只要不使用，就是每次都生成新的实例。Dagger框架不会帮你管理依赖的生命周期，需要开发者自己来控制。说白了，使用了PerActivity的scope以后，要在宿主activity的onCreate方法和onDestroy方法里控制compontent的生命周期，好坑。。。可是为什么还要大费周折的自定义scope呢？原因有二：</p>
+<ul>
+<li>1.作为标识，提高可读性，告诉开发者每一个依赖应该怎么组织管理。</li>
+<li>2.管理Compontent之间的组织关系。<br>第二条暂时按下不表，从第一条来看，我认为scope带有一定的注释的作用，它可以告诉开发者，你现在用的这个依赖应该在什么产生，在什么时候应该销毁掉。<br>这就是Scope的意义。<h2 id="二、SubCompontent"><a href="#二、SubCompontent" class="headerlink" title="二、SubCompontent"></a>二、SubCompontent</h2>当一个Compontent不能满足你的需求时，你需要对它进行扩展。一种办法是使用Component(dependencies=××.classs)。另外一种是使用@Subcomponent，Subcomponent用于拓展原有component。同时，这将产生一种副作用——子component同时具备两种不同生命周期的scope。子Component具备了父Component拥有的Scope，也具备了自己的Scope。<br>需要注意的是：两个拥有依赖关系的Compontent不能拥有相同的生命周期。为啥？看<a href="https://github.com/google/dagger/issues/107#issuecomment-71073298" target="_blank" rel="external">Jake Wharton的解释</a>：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Component1 c1 = Dagger_Component1.create();</div><div class="line">Component2 c2_a = Dagger_Component2.builder().component1(c1).build();</div><div class="line">Component2 c2_b = Dagger_Component2.builder().component1(c1).build();</div></pre></td></tr></table></figure>
+<p>先解释一下第2行代码：这里Component2依赖了Component1，使用的是Component(dependencies=××.classs)的方式，在创建Component2的实例时，需要调用component1()方法。<br>好了，分析一下上面的代码：Component2依赖于Component1，并且两者的scope相同，那么Component2中没有的实例必须在Component1中有，假设这个实例是v（不一定只有一个），那么c1中拥有唯一的v；而c2_a和c2_b是component2的不同实例，他们应该拥有两个不同的实例v，前后矛盾，这么做打破了scope的作用范围，因此，在dagger中是不允许这么做的，也表明了scope的意义之一：管理Component之间的组织。“This is by design.”</p>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/12/11/Dagger2之Scope、SubComponent/" class="archive-article-date">
+  	<time datetime="2016-12-11T10:00:50.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-12-11</time>
+</a>
+      
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Dagger2之基本概念" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/11/Dagger2之基本概念/">Dagger2 基本概念</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Dagger2学习之基本概念<br>Dagger2是一个依赖注入（Dependency Injection简称DI）框架。它是Square公司的Dagger项目下的一个分支，由Google维护。依赖注入的概念，相信接触过spring开发的都比较熟悉，简单来说就是一个类A的生成如果需要另一个类B的实例，就说A依赖于B。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">class A&#123;</div><div class="line">	B b；</div><div class="line">	A()&#123;</div><div class="line">		b = new B();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面的实现方式没有任何注入，创建A时需要在A的构造函数内部创建一个B类，这么做的缺点是A和B的耦合太严重，如果B的构造函数变了，那么就需要修改A的构造函数。可以这样改进：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">class A&#123;</div><div class="line">	B b；</div><div class="line">	A(B b)&#123;</div><div class="line">		this.b = b;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上述代码实现了手动的注入，解除了A和B的耦合，起码B的代码有修改时不需要修改A了。但是手动注入在大型项目中也是一个很麻烦的过程，一堆无意义的重复劳动，还有依赖顺序的问题，如果B再依赖于C，C依赖于D，那么创建顺序也很容易把人整懵。依赖注入框架就可以帮我们做这个事，通过自动生成的代码来把要依赖的类注入到需要依赖的类中，这就是为什么需要依赖注入的原因。<br>为什么选择Dagger2呢？因为Dagger2是通过apt插件在编译期生成代码，通过注解处理器生成特定规则的代码，比一般注解框架的运行时注解性能上要强很多，减少了很多工作量。<br>下面简单介绍一下Dagger2中的几个概念.</p>
+<ul>
+<li>.@Inject<br>@inject注解用来标注一个类中要依赖的其他类，也用来标注一个被依赖的类的构造函数。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">class A&#123;</div><div class="line">	@Inject</div><div class="line">	B b；</div><div class="line">	A()&#123;&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class B&#123;</div><div class="line">	@Inject</div><div class="line">	B()&#123;&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>通过@Inject注解，就可以把A要依赖的成员变量b和B类的构造函数对应起来。</p>
+<ul>
+<li>.@Component<br>Component注解类是一个接口或者抽象类，它用来连接依赖类和被依赖类。在当前的例子中，Component类需要引用A的实例，它会去查找A中标注了@Inject的成员，然后会查找该成员中标注了@Inject的构造函数，找到后就会初始化该成员并赋值，因此Component也可以叫它注解器（Injector）。</li>
+<li>.@Module<br>假设我们使用@Inject的方式进行注入，会面临一个问题，当需要注入一个第三方类库的类实例时，我们不可能去给对应的构造函数添加@Inject注解，此时@Module就派上用场了。使用@Module标注的类里提供一些创建类实例的方法，可以把第三方类库的类实例的生成方法生命在Module里，这样Module就成了一个提供类实例的类，然后还是通过Component来进行连接另一端的需要依赖类B的类A，这就是Component的另一个功能：管理Module。Component的modules属性可以把Module加入到Component中。</li>
+<li>@Provides<br>Component怎么跟Module关联起来呢？这就用到@Provides标注了，将Module中生产类实例的方法用@Provides标注，Component就会在找到类A中的标注的@Inject的成员b以后到它的module中寻找对应的@provides的创建B实例的方法了。<br>注意Component创建类实例有两个方法，一是通过@Inject标注的构造方法，二是通过Module中@Provides标注的方法创建。这两种方法是有优先级的，Component会优先从Module中查找，如果找到了对应方法则会停止查找并创建实例，如果没找到才会到被依赖类中查找@Inject标注的构造函数。</li>
+<li>限定符（Qualifier）<br>还是之前的例子，如果A依赖于B，并对b成员标注了@Inject，而B中有多个标注@Inject的构造函数时，Component该选择哪个呢？此时就用到限定符了。这种情况下可以给不同的构造方法用标识进行区分，相当于给每个方法一个索引，同时对应于A类中的成员b，也需要使用该标识来进行标注，这样就可以一一对应起来了。这个标识就是Qualifier注解。<br>今天先介绍这么多，Dagger2是一个非常好用的框架，学习起来比较难理解，以后会通过一些例子来边学习边总结。</li>
+</ul>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/12/11/Dagger2之基本概念/" class="archive-article-date">
+  	<time datetime="2016-12-11T09:58:27.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-12-11</time>
+</a>
+      
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Gradle学习笔记" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/11/Gradle学习笔记/">Gradle学习笔记</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#Gradle学习笔记（一）</p>
+<p>Gradle是android开发中引入的全新的构建系统。<br>    它使用领域驱动语言（DSL）来描述构建逻辑，使用groovy来编写构建脚本，可以方便的定制构建逻辑，具有非常良好的扩展性，并且我们可以非常容易的使用一些可重用的组件来组成构建。你可以随心所欲的来控制、扩展你的构建过程。<br>    Gradle里有两个最基本的概念，任何东西都是基于这两个基础概念：</p>
+<ul>
+<li>Project</li>
+<li><p>Task<br>每一个构建都由一个或多个Project构成，Project理解的不是很清楚，官方文档的解释是：“ 一个 project 到底代表什么依赖于你想用 Gradle 做什么. 举个例子, 一个 project 可以代表一个 JAR 或者一个网页应用. 它也可能代表一个发布的 ZIP 压缩包, 这个 ZIP 可能是由许多其他项目的 JARs 构成的. 但是一个 project 不一定非要代表被构建的某个东西. 它可以代表一件要做的事, 比如部署你的应用.”我理解在android开发中，一个Project就代表我们要构建的一个应用。<br>每一个Project由一个或多个Task构成，Task是一些更加细化的构建步骤，例如复制文件，签名安装包等。Project为Task提供了上下文环境。<br>gradle运行时会在当前目录中查找一个名叫build.gradle的文件，称之为构建脚本，脚本里定义了Projects和他的Tasks。<em>运行构建时，分为两步：配置阶段和执行阶段。</em><br><strong>创建Task:</strong><br>1.</p>
+<pre><code>task helloWorld &amp;lt;&amp;lt; {
+   println &quot;Hello World!&quot;
+}
+</code></pre><p>2.</p>
+<pre><code>task helloWorld {
+   doLast {
+      println &quot;Hello World&quot;}
+}
+</code></pre><p>3.</p>
+<pre><code>task helloWorld {
+   println &quot;Hello World!&quot;
+}
+</code></pre><p>4.</p>
+<pre><code>task hello(dependsOn:HelloWorld) &amp;lt;&amp;lt; {
+    println &apos;hello&apos;
+}
+</code></pre><p>5.</p>
+<pre><code>task copy(type: Copy) {
+   from &apos;resources&apos;
+   into &apos;target&apos;
+}
+</code></pre><p>通过调用Project的Task()方法来创建任务，以上1和2是等价的，doLast表示在该Task的最后加入执行代码，&lt;&lt;是doLast的快捷写法。3是直接创建了一个任务，那1、2和3有什么区别呢？就是他们执行的阶段不同，3是直接在配置区域声明的任务，因此它在配置阶段就被执行，而1和2是在配置完成后才打印“Hello World”，因此只有我们主动的调用才会执行。任务4给hello任务增加了一个依赖，表示在执行4时，要先执行其依赖的HelloWorld任务，也可以在Task定义之后再声明依赖：<code>hello.dependsOn HelloWorld</code>。对于任务5，Copy是一个内置的默认Task，它有多种重载形式，如果想直接用这个功能，我们可以配置一个Task，就像任务5做的那样，它表示本身是一个Copy任务，而且传入了两个参数，调用copy时实际上是调用了Copy任务，而且copy任务内部的代码是在配置阶段执行的，在执行阶段才会真正调用Copy。<br><strong>闭包</strong><br>闭包（Closure）是一段单独的代码块，它可以接受参数，返回值，或者赋值给一个变量，最关键的是他可以作为参数传递给其他方法，这样做有一个很大的好处就是可以解耦一些执行逻辑。闭包会在被调用的时候执行，而不是创建时。</p>
+</li>
+</ul>
+<pre><code>def hello = { println &apos;Hello world!&apos; }
+//执行闭包
+hello()
+</code></pre><p>以上代码创建了一个闭包，紧接着又调用了他，这时会打印出“Hello World!”。<br>把闭包hello当做一个参数传递：<code>method(hello)</code>，<br>如果闭包是方法最后一个参数，可以省略掉括号：<code>method hello</code>，<br>或者使用内联的闭包：<code>method({println &#39;Hello world!&#39;})</code>，<br>接受多个参数：<code>method(arg1, { println ‘Hello World’ })</code>，<br>如果闭包是最后一个参数，可以把他从括号中提出来：<code>method(arg1) { println ‘Hello World’ }</code>，<br>最后一个看上去好熟悉的样子。。。<br>闭包还可以直接使用当前上下文的变量：<br>    def word = ‘Hello World!’<br>    def closure = {println word}<br>    closure()<br>执行后将打印出“Hello World!”。<br>闭包还有一个重要的功能是就是delegate机制。简单说就是我们可以让闭包中执行代码的作用对象设置成任意其他对象：<br>    def closure = {println name}<br>    Person person = new Person()<br>    closure.setDelegate(person)<br>    class Person {<br>        def name = “hello”；<br>    }<br>上面的代码执行后打印出”hello“。定义closure时，name变量是不存在的，但是当设置了delegete是person对象时，闭包的作用对象就成了person，而person是存在name变量的，因此打印出了person的name。    </p>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/12/11/Gradle学习笔记/" class="archive-article-date">
+  	<time datetime="2016-12-11T09:47:08.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-12-11</time>
+</a>
+      
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-React-Native之Navigator" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/11/React-Native之Navigator/">React Native之Navigator</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="React-Native-之Navigator"><a href="#React-Native-之Navigator" class="headerlink" title="React Native 之Navigator"></a>React Native 之Navigator</h1><p>在React Native里，可以使用Navigator和NavigatorIOS来实现页面间的导航。导航器建立了一个路由栈，用来弹出或者推入一个路由状态。类似于Android中的Activity Task。NavigatorIOS使用了iOS中的UINavigationController类，而Navigator是完全使用js重写的一个功能类似的React组件，所以Navigator可以兼容Android和iOS，而NavigatorIOS只能用于iOS。二者的主要区别在于：<br><strong>Navigator</strong>:</p>
+<ul>
+<li>完全使用js语言开发，可以通过js进行定制。</li>
+<li>React Native团队正在积极的开发维护。</li>
+<li>兼容iOS和Android。</li>
+<li>包含一个简单的导航栏Navigator.NavigationBar。</li>
+<li>可以通过向navigationBar传递属性来提供自己的导航栏。</li>
+</ul>
+<p><strong>NavigationIOS</strong></p>
+<ul>
+<li>使用UINavigationController实现，不利于扩展定制。</li>
+<li>封装了UIKit，和原生应用表现一致，但是只能使用苹果开发好的动画和行为。</li>
+<li>默认的导航栏不是React Native视图组件，因此只能稍微修改样式。</li>
+</ul>
+<p>既然要用React Native开发通用两个平台的app，那我们当然要使用Navigator了。</p>
+<h2 id="简单跳转"><a href="#简单跳转" class="headerlink" title="简单跳转"></a>简单跳转</h2><p>这是一个简单的例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&lt;Navigator</div><div class="line">   initialRoute=&#123;&#123; name: &apos;XSLMenu&apos;, component: XSLMenu &#125;&#125;</div><div class="line">   configureScene=&#123;() =&gt; &#123;</div><div class="line">     if (Platform.OS === &apos;android&apos;) &#123;</div><div class="line">       return Navigator.SceneConfigs.FadeAndroid;</div><div class="line">     &#125;</div><div class="line">     return Navigator.SceneConfigs.FloatFromBottom;</div><div class="line">   &#125;&#125;</div><div class="line">   renderScene=&#123;(route, navigator) =&gt; &#123;</div><div class="line">     const Com = route.component;</div><div class="line">     return &lt;Com &#123;...route.params&#125; navigator=&#123;navigator&#125; /&gt;</div><div class="line">   &#125;&#125;</div><div class="line"> /&gt;</div></pre></td></tr></table></figure>
+<p><code>initialRoute={...}</code>指定了默认的页面，我是在启动app后的第一个Component上添加这些代码，component参数就是指定我要跳转到的页面，也就是启动app后实际看到的第一个页面。<br><code>configureScene={...}</code>指定页面跳转的动画，这里区分了一下Android和iOS的风格。<br><code>renderScene={...}</code>，这里有两个参数route和navigator。通过打印发现route里就是我们传递的name和component两个东西，navigator是Navigator的一个对象，它就是我们在以后的页面中跳转时需要用到的push()、pop()等方法的提供者。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">const Com = route.component;</div><div class="line">   return &lt;Com &#123;...route.params&#125; navigator=&#123;navigator&#125; /&gt;</div></pre></td></tr></table></figure></p>
+<p>这里传了两个参数，<br><code>{...route.params}</code> 和 <code>{navigator}</code>，<br><code>{navigator}</code>就是之前说的后面的页面要使用的Navigator对象，那<code>{...route.params}</code>是什么呢？…这个语法是把route.params里的每个key作为props的属性传递给下个Component。比如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">navigator.push(&#123;</div><div class="line">name: &apos;Detail&apos;,</div><div class="line">component: DetailComponent,</div><div class="line">params: &#123;</div><div class="line">    id: this.state.id</div><div class="line">    name: this.state.name</div><div class="line">&#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>就是把id和name属性都传递给了DetailComponent。<br>对于跳转到的页面，怎么接受之前页面传递的参数呢？很简单：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">props:&#123;</div><div class="line">   	navigator:Navigator;</div><div class="line">	&#125;</div><div class="line">let nav = this.props.navigator</div><div class="line">//nav.pop()</div></pre></td></tr></table></figure>
+<p>这样就实现了页面之间的跳转、返回。</p>
+<p>##Android物理返回键处理<br>对于Android来讲，返回上个页面有两种方式，点击导航栏的返回或者点手机的物理返回键，下面来处理Android物理返回键：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">const &#123; navigator &#125; = this.props;    BackAndroid.addEventListener(&apos;hardwareBackPress&apos;, () =&gt; &#123;</div><div class="line"> if (navigator &amp;&amp; navigator.getCurrentRoutes().length &gt; 1) &#123;</div><div class="line">   navigator.pop();</div><div class="line">   return true;</div><div class="line"> &#125;</div><div class="line"> return false;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>依然是使用navigator对象，BackAndroid是React Native api，添加一个对物理返回键的监听即可。<br>现在实现了页面间的跳转和Android物理返回键的处理，以及在跳转到下个页面时携带一些对象。那么如果当前页面需要使用下个页面的一些对象该怎么办呢？也就是Android开发当中的startActivityForResult和onActivityResult所做的事。</p>
+<p>##prams的高级用法<br>pop()方法并没有提供参数，这里要用到一个概念，把上个页面的实例或回调方法，当做参数传给当前页面，然后在当前页面操作上个页面的state。<br>一个查询用户信息的例子：<br>FirstComponent，把userid传递给第二个页面去查询user的信息，还传了一个getUser方法，方法里更新了state的user：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">constructor(props) &#123;</div><div class="line">     super(props);</div><div class="line">     this.state = &#123;</div><div class="line">         id: 2,</div><div class="line">     user: null,</div><div class="line">     &#125;</div><div class="line">&#125;</div><div class="line">pressButton() &#123;</div><div class="line">let _this = this;</div><div class="line">const &#123; navigator &#125; = this.props;</div><div class="line">if(navigator) &#123;</div><div class="line">  	navigator.push(&#123;</div><div class="line">      name: &apos;SecondComponent&apos;,</div><div class="line">      component: SecondComponent,</div><div class="line">      params: &#123;</div><div class="line">          id: this.state.id,</div><div class="line">          //从SecondComponent获取user</div><div class="line">          getUser: function(user) &#123;</div><div class="line">              _this.setState(&#123;</div><div class="line">                  user: user</div><div class="line">              &#125;)</div><div class="line">          &#125;</div><div class="line">      &#125;</div><div class="line">  	&#125;);</div><div class="line">	&#125;</div><div class="line">	&#125;</div><div class="line">	render() &#123;</div><div class="line">   	if( this.state.user ) &#123;</div><div class="line">       return(</div><div class="line">           &lt;View&gt;</div><div class="line">               &lt;Text&gt;用户信息: &#123; JSON.stringify(this.state.user) &#125;&lt;/Text&gt;</div><div class="line">           &lt;/View&gt;</div><div class="line">       );</div><div class="line">   	&#125;else &#123;</div><div class="line">       return(</div><div class="line">           &lt;View&gt;</div><div class="line">               &lt;TouchableOpacity onPress=&#123;this._pressButton.bind(this)&#125;&gt;</div><div class="line">                   &lt;Text&gt;查询ID为&#123; this.state.id &#125;的用户信息&lt;/Text&gt;</div><div class="line">               &lt;/TouchableOpacity&gt;</div><div class="line">           &lt;/View&gt;</div><div class="line">       );</div><div class="line">   &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>第二个页面获取到userid后，查询user信息并调用FirstComponent的getUser方法来刷新FirstComponent的页面：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">const USER_MODELS = &#123;</div><div class="line">1: &#123; name: &apos;mot&apos;, age: 23 &#125;,</div><div class="line">2: &#123; name: &apos;晴明大大&apos;, age: 25 &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">const &#123; navigator &#125; = this.props; </div><div class="line">if(this.props.getUser) &#123;</div><div class="line">	let user = USER_MODELS[this.props.id];</div><div class="line">	this.props.getUser(user);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>##统一的导航栏<br>对于应用而言, 需要统一的导航栏, Navigator 组件也提供导航栏的定制.只需要额外添加属性navigationBar：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">navigationBar=&#123; &lt;Navigator.NavigationBar routeMapper=&#123;NavigationBarRouteMapper&#125; /&gt;&#125;</div></pre></td></tr></table></figure>
+<p>routeMapper是NavigationBarRouteMapper，标题栏路由映射器，用它来描述标题栏的左键 右键和标题。</p>
+<p>​<figure class="highlight plain"><figcaption><span>NavigationBarRouteMapper = &#123;</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">// 左键</div><div class="line">LeftButton(route, navigator, index, navState) &#123;</div><div class="line">if (index &gt; 0) &#123;</div><div class="line"> return (</div><div class="line">   &lt;View &gt;</div><div class="line">     &lt;TouchableOpacity underlayColor=&quot;transparent&quot; onPress=&#123;() =&gt; &#123;if (index &gt; 0) &#123;navigator.pop()&#125;&#125;&#125; &gt;</div><div class="line">       &lt;Text&gt;</div><div class="line">         后退</div><div class="line">       &lt;/Text&gt;</div><div class="line">     &lt;/TouchableOpacity&gt;</div><div class="line">   &lt;/View&gt;</div><div class="line"> );</div><div class="line">&#125;</div><div class="line">return null</div><div class="line">&#125;,</div><div class="line">// 右键</div><div class="line">RightButton(route, navigator, index, navState) &#123;</div><div class="line">if (route.onPress) &#123;</div><div class="line"> return (</div><div class="line">   &lt;View&gt;</div><div class="line">     &lt;TouchableOpacity onPress=&#123;() =&gt; route.onPress()&#125; &gt;</div><div class="line">       &lt;Text&gt;</div><div class="line">         &#123;route.rightText || &apos;右键&apos;&#125;</div><div class="line">       &lt;/Text&gt;</div><div class="line">     &lt;/TouchableOpacity&gt;</div><div class="line">   &lt;/View&gt;</div><div class="line"> );</div><div class="line">&#125;</div><div class="line">return null;</div><div class="line">&#125;,</div><div class="line">// 标题</div><div class="line">Title(route, navigator, index, navState) &#123;</div><div class="line">return (</div><div class="line"> &lt;View&gt;</div><div class="line">   &lt;Text&gt;</div><div class="line">     应用标题</div><div class="line">   &lt;/Text&gt;</div><div class="line"> &lt;/View&gt;</div><div class="line">);</div><div class="line">&#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>这样就实现了统一的导航栏。不过有一点疑问的是，是不是所有页面的左右键的动作都要写在这个mapper里，如果是的话，随着项目变大，这里的代码会越来越多，期待更好的解决方案。</p>
+<p>Done。</p>
+<p>```</p>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/12/11/React-Native之Navigator/" class="archive-article-date">
+  	<time datetime="2016-12-11T09:41:41.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-12-11</time>
+</a>
+      
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+
+
+  
     <article id="post-Android的Theme结构" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
